@@ -1,157 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nirankari Samagam</title>
+<title>Ultra Samagam V2</title>
 
 <style>
-body {
-  margin:0;
-  font-family:Segoe UI;
-  background:#050510;
-  color:white;
+body{
+margin:0;
+background:#050510;
+color:white;
+font-family:sans-serif;
 }
 
 /* HEADER */
-header {
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);
+header{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
 }
 
-h1{
-  color:#00fff2;
-  text-shadow:0 0 10px #00fff2;
-}
+h1{color:#00fff2;}
 
-/* SEARCH */
 input{
-  padding:8px;
-  border-radius:10px;
-  border:none;
-}
-
-/* PLAYER */
-iframe{
-  width:100%;
-  height:250px;
-  border:none;
-  border-radius:12px;
+padding:8px;
+border-radius:10px;
+border:none;
 }
 
 /* GRID */
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px;
-  padding:10px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:10px;
+padding:10px;
 }
 
 .card{
-  background:rgba(255,255,255,0.05);
-  padding:10px;
-  border-radius:10px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
+border-radius:10px;
+overflow:hidden;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card img{
+width:100%;
+height:120px;
+object-fit:cover;
 }
 
 .card:hover{
-  box-shadow:0 0 15px #00fff2;
-  transform:scale(1.05);
+transform:scale(1.1);
+box-shadow:0 0 20px #00fff2;
 }
 
-/* STATUS */
-.live{color:lime;font-size:12px;}
-.dead{color:red;font-size:12px;}
+.title{
+padding:5px;
+font-size:12px;
+text-align:center;
+background:#111;
+}
 
-.section{
-  padding:10px;
+/* POPUP */
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+display:none;
+}
+
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+.close{
+position:absolute;
+top:10px;
+right:10px;
+font-size:25px;
+cursor:pointer;
 }
 
 h2{
-  color:#ff00ff;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  iframe{height:200px;}
+padding-left:10px;
+color:#ff00ff;
 }
 </style>
-
 </head>
 
 <body>
 
 <header>
-<h1>🔥 Nirankari</h1>
-<input type="text" id="search" placeholder="Search...">
+<h1>🔥 Samagam Hub</h1>
+<input id="search" placeholder="Search...">
 </header>
 
-<!-- PLAYER -->
-<div style="padding:10px">
+<div id="count" style="padding:10px"></div>
+<div id="content"></div>
+
+<div class="popup" id="popup">
+<span class="close" onclick="closePlayer()">❌</span>
 <iframe id="player"></iframe>
 </div>
 
-<!-- SECTIONS -->
-<div id="content"></div>
-
 <script>
 
-/* DATA FROM YOUR FILE */
+/* ALL LINKS */
 const data = {
-"Stream Only":[
+"Stream":[
 "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html",
 "https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ",
 "https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/",
 "https://m.vkvideo.ru/video-235745371_456239017",
-"https://vimeo.com/1159540263"
+"https://m.ok.ru/video/12150196210357",
+"https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905",
+"https://vimeo.com/1159540263",
+"https://www.nicovideo.jp/watch/sm45887902",
+"https://trovo.live/s/sammethuse/549873486261",
+"https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608"
 ],
 
 "Stream & Download":[
 "https://streamruby.com/m00wtf3n2ypy.html",
+"https://nirankar.seeks.cloud/#lh1sz&dl=1",
+"https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1",
+"https://nirankar.player4me.vip/#d1l6i&dl=1",
+"https://sendvid.com/gof5vy7y",
 "https://archive.org/details/78th-nirankari-samagum-2025",
-"https://krakenfiles.com/view/JzQoPeA9lK/file.html"
+"https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q",
+"https://krakenfiles.com/view/JzQoPeA9lK/file.html",
+"https://photos.app.goo.gl/rzPwhaZF2HSDf51A8",
+"https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId",
+"https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw"
 ],
 
 "Download":[
 "https://mediafire.com",
 "https://filemoon.org",
-"https://bestfile.io"
+"https://bestfile.io",
+"https://uploadflix.com"
 ],
 
-"Login Required":[
+"Cloud Login":[
 "https://1024terabox.com",
 "https://mypikpak.com",
 "https://4shared.com"
 ]
 };
 
+/* THUMB */
+function thumb(url){
+if(url.includes("vimeo")){
+return "https://vumbnail.com/"+url.split("/").pop()+".jpg";
+}
+return "https://picsum.photos/300/200?random="+Math.random();
+}
+
 /* RENDER */
+let total=0;
 let html="";
 for(let key in data){
-html+=`<div class="section">
-<h2>${key} (${data[key].length})</h2>
-<div class="grid">`;
-
+html+=`<h2>${key}</h2><div class="grid">`;
 data[key].forEach(link=>{
-html+=`<div class="card" onclick="play('${link}')">
-${new URL(link).hostname}
-<div class="status">checking...</div>
+total++;
+html+=`
+<div class="card" onclick="play('${link}')">
+<img src="${thumb(link)}">
+<div class="title">${new URL(link).hostname}</div>
 </div>`;
 });
-
-html+=`</div></div>`;
+html+="</div>";
 }
 
 document.getElementById("content").innerHTML=html;
+document.getElementById("count").innerHTML="Total Links: "+total;
 
 /* PLAYER */
 function play(url){
+document.getElementById("popup").style.display="block";
 document.getElementById("player").src=url;
+}
+
+/* CLOSE */
+function closePlayer(){
+document.getElementById("popup").style.display="none";
 }
 
 /* SEARCH */
@@ -161,13 +199,6 @@ document.querySelectorAll(".card").forEach(c=>{
 c.style.display=c.innerText.toLowerCase().includes(val)?"block":"none";
 });
 };
-
-/* AUTO CHECK */
-document.querySelectorAll(".card").forEach(card=>{
-fetch(card.innerText,{mode:"no-cors"})
-.then(()=>card.querySelector(".status").innerHTML="<span class='live'>● Live</span>")
-.catch(()=>card.querySelector(".status").innerHTML="<span class='dead'>● Dead</span>");
-});
 
 </script>
 
