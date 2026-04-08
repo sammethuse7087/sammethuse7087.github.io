@@ -2,32 +2,62 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>78th Nirankari Samagam</title>
 
 <style>
 body{
-background:#0d0d0d;
+background:#0b0b0b;
 color:white;
 font-family:Arial;
-text-align:center;
-padding:15px;
-}
-
-h1{color:#00ffcc;}
-h2{color:#ffa500; margin-top:30px;}
-
-a{
-display:block;
-margin:6px;
 padding:10px;
-background:#00ffcc;
-color:black;
-text-decoration:none;
-border-radius:8px;
-font-weight:bold;
 }
 
-a:hover{background:#00ccaa;}
+h1{
+text-align:center;
+color:#00ffcc;
+}
+
+.section{
+margin:20px 0;
+padding:15px;
+background:#062e1f;
+border-radius:12px;
+}
+
+.section h2{
+color:#ff9900;
+}
+
+.card{
+background:#064d33;
+margin:10px 0;
+padding:15px;
+border-radius:10px;
+word-break:break-all;
+}
+
+.btns{
+margin-top:8px;
+}
+
+button{
+margin:3px;
+padding:6px 10px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.open{background:black;color:white;}
+.copy{background:#00cc66;color:black;}
+.share{background:orange;color:black;}
+
+.footer{
+text-align:center;
+margin-top:20px;
+color:#aaa;
+}
 </style>
 </head>
 
@@ -35,91 +65,113 @@ a:hover{background:#00ccaa;}
 
 <h1>🔥 78th Nirankari Samagam 🔥</h1>
 
-<h2>Stream</h2>
-<a href="https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html">Rumble</a>
-<a href="https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ">DTube</a>
-<a href="https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/">RuTube</a>
-<a href="https://m.vkvideo.ru/video-235745371_456239017">VK Video</a>
-<a href="https://m.ok.ru/video/12150196210357">OK</a>
-<a href="https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905">Brighteon</a>
-<a href="https://vimeo.com/1159540263">Vimeo</a>
-<a href="https://www.nicovideo.jp/watch/sm45887902">NicoVideo</a>
-<a href="https://trovo.live/s/sammethuse/549873486261">Trovo 1</a>
-<a href="https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608">Trovo 2</a>
+<div id="app"></div>
 
-<h2>Stream & Download</h2>
-<a href="https://streamruby.com/m00wtf3n2ypy.html">StreamRuby</a>
-<a href="https://nirankar.seeks.cloud/#lh1sz&dl=1">Seeks</a>
-<a href="https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1">Dri</a>
-<a href="https://nirankar.player4me.vip/#d1l6i&dl=1">Player4Me</a>
-<a href="https://sendvid.com/gof5vy7y">SendVid</a>
-<a href="https://archive.org/details/78th-nirankari-samagum-2025">Archive</a>
-<a href="https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q">Liberta</a>
-<a href="https://krakenfiles.com/view/JzQoPeA9lK/file.html">KrakenFiles</a>
-<a href="https://photos.app.goo.gl/rzPwhaZF2HSDf51A8">Photos</a>
+<div class="footer" id="count"></div>
 
-<a href="https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA">Jio 1</a>
-<a href="https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU">Jio 2</a>
-<a href="https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW">Jio 3</a>
+<script>
 
-<a href="https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId">Google Drive</a>
-<a href="https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1">TotalDrive</a>
-<a href="https://bit.ly/3Nhmxtt">Bitly</a>
-<a href="https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k">OneDrive</a>
-<a href="https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt">IceDrive</a>
+const data = {
+"Stream":[
+"https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html",
+"https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ",
+"https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/",
+"https://m.vkvideo.ru/video-235745371_456239017",
+"https://m.ok.ru/video/12150196210357",
+"https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905",
+"https://vimeo.com/1159540263",
+"https://www.nicovideo.jp/watch/sm45887902",
+"https://trovo.live/s/sammethuse/549873486261",
+"https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608"
+],
 
-<a href="https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m/APiTwgZOco9R2CWHk4vVw08">Dropbox</a>
+"Stream & Download":[
+"https://streamruby.com/m00wtf3n2ypy.html",
+"https://nirankar.seeks.cloud/#lh1sz&dl=1",
+"https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1",
+"https://nirankar.player4me.vip/#d1l6i&dl=1",
+"https://sendvid.com/gof5vy7y",
+"https://archive.org/details/78th-nirankari-samagum-2025",
+"https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q",
+"https://krakenfiles.com/view/JzQoPeA9lK/file.html",
+"https://photos.app.goo.gl/rzPwhaZF2HSDf51A8",
+"https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA",
+"https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU",
+"https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW",
+"https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId",
+"https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1",
+"https://bit.ly/3Nhmxtt",
+"https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k",
+"https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt",
+"https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m",
+"https://drive.proton.me/urls/WV01AKA3A0",
+"https://drive.proton.me/urls/AHD8AHFETG",
+"https://drive.proton.me/urls/NSD2X49Q4W",
+"https://mega.nz/folder/8J0EGA7D",
+"https://mega.nz/folder/zcMiAIqb",
+"https://files.fm/u/ma2g5bcfvb",
+"https://files.fm/u/ma2g5bcfvb?k=613960f6",
+"https://files.fm/u/ma2g5bcfvb?ak=43f5b",
+"https://anonfilesnew.com/s/gCplY7AhEW0",
+"https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f",
+"https://disk.yandex.com/d/J-3HqbbTahnEsw",
+"https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD",
+"https://www.bitchute.com/video/yFPRwvGW7XTF",
+"https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d",
+"https://luluvdoo.com/d/tpuvgibz5cbt",
+"https://luluvdoo.com/d/6sbt9rw10qtg",
+"https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q",
+"https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979",
+"https://doi.org/10.6084/m9.figshare.31276960",
+"https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960"
+],
 
-<a href="https://drive.proton.me/urls/WV01AKA3A0#k3Ad4731GFrw">Proton 1</a>
-<a href="https://drive.proton.me/urls/AHD8AHFETG#4czT7Av9d3HM">Proton 2</a>
-<a href="https://drive.proton.me/urls/NSD2X49Q4W#eoD-Po7lcODB">Proton 3</a>
+"Download":[
+"https://app.cimediacloud.com/r/oFT3XPzKZJON",
+"https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7",
+"https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX",
+"https://e.pcloud.link/publink/show",
+"https://www.mediafire.com/folder/ffz29cwk5cdzx",
+"https://www.fireload.com/721a50ebb232aaed",
+"https://dl.uploadflix.com/ix77dqeqx4eh",
+"https://filemoon.org/LJlGn9bZz15w/file",
+"https://bestfile.io/en/2qzP33JsNLhGfTM/file",
+"https://bestfile.io/en/a8LrSnKoqcs32zh/file",
+"https://www.febbox.com/share/uQzP3dJx",
+"https://www.febbox.com/share/rAZTXkYU",
+"https://www.febbox.com/share/fUURuOv1"
+],
 
-<a href="https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw">Mega 1</a>
-<a href="https://mega.nz/folder/zcMiAIqb#Wsz9dd23FsjIGu8C6rRolQ">Mega 2</a>
+"Cloud Login":[
+"https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw",
+"https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA",
+"https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2",
+"https://www.4shared.com/folder/ldxhi-wS",
+"https://dai.ly/x9yofzm"
+]
+};
 
-<a href="https://files.fm/u/ma2g5bcfvb">FilesFM 1</a>
-<a href="https://files.fm/u/ma2g5bcfvb?k=613960f6">FilesFM 2</a>
-<a href="https://files.fm/u/ma2g5bcfvb?ak=43f5b">FilesFM 3</a>
+let total = 0;
+const app = document.getElementById("app");
 
-<a href="https://anonfilesnew.com/s/gCplY7AhEW0">AnonFiles</a>
-<a href="https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f">Zoho</a>
-<a href="https://disk.yandex.com/d/J-3HqbbTahnEsw">Yandex</a>
+for (let category in data){
+let section = `<div class="section"><h2>${category}</h2>`;
+data[category].forEach(link=>{
+total++;
+section += `<div class="card">${link}
+<div class="btns">
+<button class="open" onclick="window.open('${link}')">Open</button>
+<button class="copy" onclick="navigator.clipboard.writeText('${link}')">Copy</button>
+<button class="share" onclick="navigator.share({url:'${link}'})">Share</button>
+</div></div>`;
+});
+section += `</div>`;
+app.innerHTML += section;
+}
 
-<a href="https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD">MakerTube</a>
-<a href="https://www.bitchute.com/video/yFPRwvGW7XTF">BitChute</a>
-<a href="https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d">Odysee</a>
+document.getElementById("count").innerText = "⭐ Total Links: " + total;
 
-<a href="https://luluvdoo.com/d/tpuvgibz5cbt">Lulu 1</a>
-<a href="https://luluvdoo.com/d/6sbt9rw10qtg">Lulu 2</a>
-
-<a href="https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q">Box</a>
-<a href="https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979">Jotta</a>
-
-<a href="https://doi.org/10.6084/m9.figshare.31276960">DOI</a>
-<a href="https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960">Figshare</a>
-
-<h2>Download</h2>
-<a href="https://app.cimediacloud.com/r/oFT3XPzKZJON">Cimedia</a>
-<a href="https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7">Internxt</a>
-<a href="https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX">MobiDrive</a>
-<a href="https://e.pcloud.link/publink/show?code=kZ701AZLKADbBmtCXumiLVKfn54JQX32MKy">Pcloud</a>
-<a href="https://www.mediafire.com/folder/ffz29cwk5cdzx">MediaFire</a>
-<a href="https://www.fireload.com/721a50ebb232aaed">Fireload</a>
-<a href="https://dl.uploadflix.com/ix77dqeqx4eh">Uploadflix</a>
-<a href="https://filemoon.org/LJlGn9bZz15w/file">FileMoon</a>
-<a href="https://bestfile.io/en/2qzP33JsNLhGfTM/file">BestFile 1</a>
-<a href="https://bestfile.io/en/a8LrSnKoqcs32zh/file">BestFile 2</a>
-
-<a href="https://www.febbox.com/share/uQzP3dJx">Febbox 1</a>
-<a href="https://www.febbox.com/share/rAZTXkYU">Febbox 2</a>
-<a href="https://www.febbox.com/share/fUURuOv1">Febbox 3</a>
-
-<h2>Cloud Login</h2>
-<a href="https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw">Terabox 1</a>
-<a href="https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA">Terabox 2</a>
-<a href="https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2">PikPak</a>
-<a href="https://www.4shared.com/folder/ldxhi-wS">4Shared</a>
-<a href="https://dai.ly/x9yofzm">Dailymotion</a>
+</script>
 
 </body>
 </html>
