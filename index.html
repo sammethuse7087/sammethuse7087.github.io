@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>78th Nirankari Sant Samagam 2025 | Media Links</title>
     <style>
         /* ---------- CSS Variables for Themes ---------- */
@@ -30,9 +30,10 @@
             --batch-bar-bg: #0f1a2b;
             --shadow: rgba(0,0,0,0.6);
             --icon-filter: none;
+            --menu-bg: #1e2b47;
+            --menu-border: #3b5780;
         }
 
-        /* AMOLED Black Theme */
         [data-theme="amoled"] {
             --bg-body: #000000;
             --bg-container: #000000;
@@ -56,9 +57,10 @@
             --notice-text: #ffdf9c;
             --batch-bar-bg: #000000;
             --shadow: rgba(255,255,255,0.05);
+            --menu-bg: #121212;
+            --menu-border: #3a3a3a;
         }
 
-        /* Light Theme */
         [data-theme="light"] {
             --bg-body: #f5f7fa;
             --bg-container: #ffffff;
@@ -82,7 +84,8 @@
             --notice-text: #92400e;
             --batch-bar-bg: #ffffff;
             --shadow: rgba(0,0,0,0.1);
-            --icon-filter: none;
+            --menu-bg: #ffffff;
+            --menu-border: #cbd5e1;
         }
 
         * {
@@ -98,10 +101,11 @@
             padding: 20px 20px 100px;
             line-height: 1.5;
             transition: background 0.2s, color 0.2s;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             background: var(--bg-container);
             backdrop-filter: blur(10px);
@@ -112,7 +116,6 @@
             transition: background 0.2s, border 0.2s;
         }
 
-        /* Theme Toggle Button */
         .theme-toggle-wrapper {
             display: flex;
             justify-content: flex-end;
@@ -132,9 +135,9 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s;
@@ -187,17 +190,13 @@
             background: var(--count-badge-bg);
             border: 1px solid var(--accent-primary);
             color: white;
-            padding: 6px 16px;
+            padding: 10px 20px;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: 0.1s;
             margin-left: 15px;
-        }
-
-        .global-select-all:hover {
-            opacity: 0.9;
         }
 
         .section {
@@ -231,7 +230,7 @@
             background: var(--count-badge-bg);
             color: white;
             border-radius: 30px;
-            padding: 3px 14px;
+            padding: 4px 16px;
             font-size: 0.9rem;
             margin-left: 10px;
             font-weight: 400;
@@ -249,8 +248,8 @@
         }
 
         .select-all-section input {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             accent-color: var(--accent-primary);
         }
@@ -258,13 +257,13 @@
         .link-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .link-item {
             background: var(--item-bg);
-            border-radius: 14px;
-            padding: 12px 18px;
+            border-radius: 16px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -272,6 +271,8 @@
             transition: all 0.15s ease;
             border: 1px solid var(--item-border);
             border-left-width: 6px;
+            cursor: pointer;
+            position: relative;
         }
 
         .link-item:hover {
@@ -286,11 +287,19 @@
         }
 
         .link-checkbox input {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
             accent-color: var(--accent-primary);
-            transform: scale(1);
+        }
+
+        .link-serial {
+            font-weight: 700;
+            color: var(--accent-primary);
+            min-width: 32px;
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
 
         .link-info {
@@ -314,7 +323,6 @@
             width: 20px;
             height: 20px;
             object-fit: contain;
-            filter: var(--icon-filter);
         }
 
         .link-details {
@@ -326,12 +334,63 @@
             color: var(--text-primary);
             margin-bottom: 4px;
             word-break: break-word;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .link-url {
             font-size: 0.8rem;
             color: var(--text-secondary);
             word-break: break-all;
+        }
+
+        .link-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .click-counter {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background: var(--badge-bg);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #666;
+            cursor: pointer;
+        }
+
+        .status-dot.live { background: #10b981; box-shadow: 0 0 8px #10b98180; }
+        .status-dot.dead { background: #ef4444; box-shadow: 0 0 8px #ef444480; }
+        .status-dot.checking { background: #f59e0b; animation: pulse 1s infinite; }
+
+        .recheck-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 20px;
         }
 
         .actions {
@@ -344,30 +403,23 @@
             background: var(--btn-bg);
             border: none;
             color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.1s;
             border: 1px solid var(--btn-border);
             text-decoration: none;
             display: inline-block;
-        }
-
-        .btn:hover {
-            background: var(--btn-hover-bg);
-            border-color: var(--accent-primary);
+            min-width: 70px;
+            text-align: center;
         }
 
         .btn-primary {
             background: var(--accent-primary);
             color: white;
             border-color: var(--accent-primary);
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
         }
 
         .btn-share {
@@ -389,10 +441,9 @@
             padding: 2px 12px;
             font-size: 0.7rem;
             font-weight: 500;
-            margin-left: 10px;
         }
 
-        /* Batch action bar */
+        /* Batch bar */
         .batch-bar {
             position: fixed;
             bottom: 30px;
@@ -401,7 +452,7 @@
             background: var(--batch-bar-bg);
             border: 1px solid var(--border-light);
             border-radius: 60px;
-            padding: 12px 25px;
+            padding: 14px 30px;
             display: none;
             align-items: center;
             gap: 20px;
@@ -410,42 +461,57 @@
             z-index: 1000;
         }
 
-        .batch-bar.show {
-            display: flex;
-        }
+        .batch-bar.show { display: flex; }
 
         .selected-count {
             color: var(--text-primary);
             font-weight: 600;
             background: var(--count-badge-bg);
-            padding: 5px 16px;
+            padding: 6px 20px;
             border-radius: 40px;
-        }
-
-        .batch-actions {
-            display: flex;
-            gap: 10px;
         }
 
         .batch-btn {
             background: var(--accent-primary);
             border: 1px solid var(--accent-primary);
             color: white;
-            padding: 10px 22px;
+            padding: 12px 24px;
             border-radius: 40px;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: 0.1s;
         }
 
-        .batch-btn:hover {
-            opacity: 0.9;
+        /* Custom Context Menu */
+        .context-menu {
+            position: fixed;
+            background: var(--menu-bg);
+            border: 1px solid var(--menu-border);
+            border-radius: 16px;
+            padding: 8px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 2000;
+            min-width: 180px;
+            backdrop-filter: blur(8px);
+            display: none;
         }
 
-        #clearSelectionBtn {
-            background: #4a2e3a;
-            border-color: #8b4e5e;
+        .context-menu.show { display: block; }
+
+        .context-menu-item {
+            padding: 12px 20px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.1s;
+        }
+
+        .context-menu-item:hover {
+            background: var(--accent-primary);
+            color: white;
         }
 
         footer {
@@ -455,18 +521,23 @@
             font-size: 0.85rem;
         }
 
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         @media (max-width: 700px) {
             .container { padding: 18px 12px; }
             h1 { font-size: 1.8rem; }
             .link-item { flex-wrap: wrap; }
             .actions { margin-left: auto; }
             .batch-bar { width: 95%; padding: 12px 15px; flex-wrap: wrap; justify-content: center; }
+            .btn { padding: 12px 16px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- Theme Toggle -->
     <div class="theme-toggle-wrapper">
         <div class="theme-toggle">
             <button class="theme-option active" data-theme="dark">🌙 Dark</button>
@@ -484,56 +555,14 @@
         <span class="total-badge">📎 Total 66 Links</span>
     </div>
 
-    <!-- SECTION: STREAM -->
-    <div class="section" data-category="stream">
-        <div class="section-header">
-            <h2>🎬 Stream <span class="badge-count" id="stream-count">10 Links</span></h2>
-            <label class="select-all-section">
-                <input type="checkbox" class="section-select-all" data-section="stream"> Select All
-            </label>
-        </div>
-        <div class="link-grid" id="stream-links"></div>
-    </div>
-
-    <!-- SECTION: STREAM & DOWNLOAD -->
-    <div class="section" data-category="streamdl">
-        <div class="section-header">
-            <h2>📡 Stream & Download <span class="badge-count" id="streamdl-count">38 Links</span></h2>
-            <label class="select-all-section">
-                <input type="checkbox" class="section-select-all" data-section="streamdl"> Select All
-            </label>
-        </div>
-        <div class="link-grid" id="stream-download-links"></div>
-    </div>
-
-    <!-- SECTION: DOWNLOAD ONLY -->
-    <div class="section" data-category="download">
-        <div class="section-header">
-            <h2>⬇️ Download <span class="badge-count" id="download-count">13 Links</span></h2>
-            <label class="select-all-section">
-                <input type="checkbox" class="section-select-all" data-section="download"> Select All
-            </label>
-        </div>
-        <div class="link-grid" id="download-links"></div>
-    </div>
-
-    <!-- SECTION: CLOUD LOGIN -->
-    <div class="section" data-category="cloud">
-        <div class="section-header">
-            <h2>☁️ Cloud Login <span class="badge-count" id="cloud-count">5 Links</span></h2>
-            <label class="select-all-section">
-                <input type="checkbox" class="section-select-all" data-section="cloud"> Select All
-            </label>
-        </div>
-        <div class="link-grid" id="cloud-links"></div>
-    </div>
+    <div id="sections-container"></div>
 
     <footer>
-        ⚡ All links open on respective platforms. Enjoy the Satsang.
+        ⚡ Click any tile to open • Long-press/Right-click for menu • Status dots auto-update
     </footer>
 </div>
 
-<!-- Batch Action Bar -->
+<!-- Batch Bar -->
 <div class="batch-bar" id="batchBar">
     <span class="selected-count" id="selectedCount">0 selected</span>
     <div class="batch-actions">
@@ -543,351 +572,401 @@
     <button class="batch-btn" id="clearSelectionBtn" style="background:#4a2e3a;">Clear</button>
 </div>
 
+<!-- Context Menu -->
+<div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" data-action="open">🔗 Open in New Tab</div>
+    <div class="context-menu-item" data-action="copy">📋 Copy Link</div>
+    <div class="context-menu-item" data-action="share">📤 Share Link</div>
+</div>
+
 <script>
-    (function() {
+    (function(){
+        'use strict';
+
         // ---------- DATA ----------
-        const streamLinks = [
-            { name: "Rumble", url: "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html" },
-            { name: "D.Tube", url: "https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ" },
-            { name: "Rutube", url: "https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/" },
-            { name: "VK Video", url: "https://m.vkvideo.ru/video-235745371_456239017" },
-            { name: "OK.ru", url: "https://m.ok.ru/video/12150196210357" },
-            { name: "Brighteon", url: "https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905" },
-            { name: "Vimeo", url: "https://vimeo.com/1159540263?fl=pl&fe=sh" },
-            { name: "Niconico", url: "https://www.nicovideo.jp/watch/sm45887902" },
-            { name: "Trovo (1)", url: "https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608" },
-            { name: "Trovo (2)", url: "https://trovo.live/s/sammethuse/549873486261" }
+        const sections = [
+            { title: '🎬 Stream', id: 'stream', links: [
+                { name: "Rumble", url: "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html" },
+                { name: "D.Tube", url: "https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ" },
+                { name: "Rutube", url: "https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/" },
+                { name: "VK Video", url: "https://m.vkvideo.ru/video-235745371_456239017" },
+                { name: "OK.ru", url: "https://m.ok.ru/video/12150196210357" },
+                { name: "Brighteon", url: "https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905" },
+                { name: "Vimeo", url: "https://vimeo.com/1159540263?fl=pl&fe=sh" },
+                { name: "Niconico", url: "https://www.nicovideo.jp/watch/sm45887902" },
+                { name: "Trovo (1)", url: "https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608" },
+                { name: "Trovo (2)", url: "https://trovo.live/s/sammethuse/549873486261" }
+            ]},
+            { title: '📡 Stream & Download', id: 'streamdl', links: [
+                { name: "StreamRuby", url: "https://streamruby.com/m00wtf3n2ypy.html" },
+                { name: "Nirankar Seeks", url: "https://nirankar.seeks.cloud/#lh1sz&dl=1" },
+                { name: "Dri.me", url: "https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1" },
+                { name: "Player4Me", url: "https://nirankar.player4me.vip/#d1l6i&dl=1" },
+                { name: "SendVid", url: "https://sendvid.com/gof5vy7y" },
+                { name: "Archive.org", url: "https://archive.org/details/78th-nirankari-samagum-2025" },
+                { name: "Liberta.vip", url: "https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q" },
+                { name: "KrakenFiles", url: "https://krakenfiles.com/view/JzQoPeA9lK/file.html" },
+                { name: "Google Photos", url: "https://photos.app.goo.gl/rzPwhaZF2HSDf51A8" },
+                { name: "JioCloud 1", url: "https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA" },
+                { name: "JioCloud 2", url: "https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU" },
+                { name: "JioCloud 3", url: "https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW" },
+                { name: "Google Drive", url: "https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId" },
+                { name: "TotalDrive", url: "https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1" },
+                { name: "Bit.ly", url: "https://bit.ly/3Nhmxtt" },
+                { name: "OneDrive", url: "https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k" },
+                { name: "Icedrive", url: "https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt" },
+                { name: "Dropbox", url: "https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m/APiTwgZOco9R2CWHk4vVw08?rlkey=78gxp554jq5itl0pacjyu06da&st=2nue4nsk&dl=0" },
+                { name: "Proton Drive 1", url: "https://drive.proton.me/urls/WV01AKA3A0#k3Ad4731GFrw" },
+                { name: "Proton Drive 2", url: "https://drive.proton.me/urls/AHD8AHFETG#4czT7Av9d3HM" },
+                { name: "Proton Drive 3", url: "https://drive.proton.me/urls/NSD2X49Q4W#eoD-Po7lcODB" },
+                { name: "MEGA 1", url: "https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw" },
+                { name: "MEGA 2", url: "https://mega.nz/folder/zcMiAIqb#Wsz9dd23FsjIGu8C6rRolQ" },
+                { name: "Files.fm (1)", url: "https://files.fm/u/ma2g5bcfvb" },
+                { name: "Files.fm (2)", url: "https://files.fm/u/ma2g5bcfvb?k=613960f6" },
+                { name: "Files.fm (3)", url: "https://files.fm/u/ma2g5bcfvb?ak=43f5b" },
+                { name: "AnonFilesNew", url: "https://anonfilesnew.com/s/gCplY7AhEW0" },
+                { name: "Zoho WorkDrive", url: "https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f" },
+                { name: "Yandex Disk", url: "https://disk.yandex.com/d/J-3HqbbTahnEsw" },
+                { name: "MakerTube", url: "https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD" },
+                { name: "BitChute", url: "https://www.bitchute.com/video/yFPRwvGW7XTF" },
+                { name: "Odysee", url: "https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d" },
+                { name: "LuluVdoo 1", url: "https://luluvdoo.com/d/tpuvgibz5cbt" },
+                { name: "LuluVdoo 2", url: "https://luluvdoo.com/d/6sbt9rw10qtg" },
+                { name: "Box", url: "https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q" },
+                { name: "Jottacloud", url: "https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979" },
+                { name: "DOI/Figshare", url: "https://doi.org/10.6084/m9.figshare.31276960" },
+                { name: "Figshare", url: "https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960" }
+            ]},
+            { title: '⬇️ Download', id: 'download', links: [
+                { name: "Cimediacloud", url: "https://app.cimediacloud.com/r/oFT3XPzKZJON" },
+                { name: "Internxt", url: "https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7/W-X7M66V" },
+                { name: "Mobidrive", url: "https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX" },
+                { name: "pCloud", url: "https://e.pcloud.link/publink/show?code=kZ701AZLKADbBmtCXumiLVKfn54JQX32MKy" },
+                { name: "MediaFire", url: "https://www.mediafire.com/folder/ffz29cwk5cdzx/78th+Nirankari+Sant+Samagam+2025" },
+                { name: "Fireload", url: "https://www.fireload.com/721a50ebb232aaed/78th_Nirankari_Sant_Samagaam.mp4" },
+                { name: "UploadFlix", url: "https://dl.uploadflix.com/ix77dqeqx4eh" },
+                { name: "Filemoon", url: "https://filemoon.org/LJlGn9bZz15w/file" },
+                { name: "BestFile 1", url: "https://bestfile.io/en/2qzP33JsNLhGfTM/file" },
+                { name: "BestFile 2", url: "https://bestfile.io/en/a8LrSnKoqcs32zh/file" },
+                { name: "Febbox 1", url: "https://www.febbox.com/share/uQzP3dJx" },
+                { name: "Febbox 2", url: "https://www.febbox.com/share/rAZTXkYU" },
+                { name: "Febbox 3", url: "https://www.febbox.com/share/fUURuOv1" }
+            ]},
+            { title: '☁️ Cloud Login', id: 'cloud', links: [
+                { name: "TeraBox 1", url: "https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw?op_source=goldsharelink" },
+                { name: "TeraBox 2", url: "https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA" },
+                { name: "PikPak", url: "https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2" },
+                { name: "4Shared", url: "https://www.4shared.com/folder/ldxhi-wS/78th_Nirankari_Sant_Samagam_20.html" },
+                { name: "Dailymotion", url: "https://dai.ly/x9yofzm" }
+            ]}
         ];
 
-        const streamDownloadLinks = [
-            { name: "StreamRuby", url: "https://streamruby.com/m00wtf3n2ypy.html" },
-            { name: "Nirankar Seeks", url: "https://nirankar.seeks.cloud/#lh1sz&dl=1" },
-            { name: "Dri.me", url: "https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1" },
-            { name: "Player4Me", url: "https://nirankar.player4me.vip/#d1l6i&dl=1" },
-            { name: "SendVid", url: "https://sendvid.com/gof5vy7y" },
-            { name: "Archive.org", url: "https://archive.org/details/78th-nirankari-samagum-2025" },
-            { name: "Liberta.vip", url: "https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q" },
-            { name: "KrakenFiles", url: "https://krakenfiles.com/view/JzQoPeA9lK/file.html" },
-            { name: "Google Photos", url: "https://photos.app.goo.gl/rzPwhaZF2HSDf51A8" },
-            { name: "JioCloud 1", url: "https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA" },
-            { name: "JioCloud 2", url: "https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU" },
-            { name: "JioCloud 3", url: "https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW" },
-            { name: "Google Drive", url: "https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId" },
-            { name: "TotalDrive", url: "https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1" },
-            { name: "Bit.ly", url: "https://bit.ly/3Nhmxtt" },
-            { name: "OneDrive", url: "https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k" },
-            { name: "Icedrive", url: "https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt" },
-            { name: "Dropbox", url: "https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m/APiTwgZOco9R2CWHk4vVw08?rlkey=78gxp554jq5itl0pacjyu06da&st=2nue4nsk&dl=0" },
-            { name: "Proton Drive 1", url: "https://drive.proton.me/urls/WV01AKA3A0#k3Ad4731GFrw" },
-            { name: "Proton Drive 2", url: "https://drive.proton.me/urls/AHD8AHFETG#4czT7Av9d3HM" },
-            { name: "Proton Drive 3", url: "https://drive.proton.me/urls/NSD2X49Q4W#eoD-Po7lcODB" },
-            { name: "MEGA 1", url: "https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw" },
-            { name: "MEGA 2", url: "https://mega.nz/folder/zcMiAIqb#Wsz9dd23FsjIGu8C6rRolQ" },
-            { name: "Files.fm (1)", url: "https://files.fm/u/ma2g5bcfvb" },
-            { name: "Files.fm (2)", url: "https://files.fm/u/ma2g5bcfvb?k=613960f6" },
-            { name: "Files.fm (3)", url: "https://files.fm/u/ma2g5bcfvb?ak=43f5b" },
-            { name: "AnonFilesNew", url: "https://anonfilesnew.com/s/gCplY7AhEW0" },
-            { name: "Zoho WorkDrive", url: "https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f" },
-            { name: "Yandex Disk", url: "https://disk.yandex.com/d/J-3HqbbTahnEsw" },
-            { name: "MakerTube", url: "https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD" },
-            { name: "BitChute", url: "https://www.bitchute.com/video/yFPRwvGW7XTF" },
-            { name: "Odysee", url: "https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d" },
-            { name: "LuluVdoo 1", url: "https://luluvdoo.com/d/tpuvgibz5cbt" },
-            { name: "LuluVdoo 2", url: "https://luluvdoo.com/d/6sbt9rw10qtg" },
-            { name: "Box", url: "https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q" },
-            { name: "Jottacloud", url: "https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979" },
-            { name: "DOI/Figshare", url: "https://doi.org/10.6084/m9.figshare.31276960" },
-            { name: "Figshare", url: "https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960" }
-        ];
+        // Global state
+        let currentContextLink = null;
+        let serialCounter = 1;
+        const clickCounts = JSON.parse(localStorage.getItem('linkClickCounts')) || {};
 
-        const downloadLinks = [
-            { name: "Cimediacloud", url: "https://app.cimediacloud.com/r/oFT3XPzKZJON" },
-            { name: "Internxt", url: "https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7/W-X7M66V" },
-            { name: "Mobidrive", url: "https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX" },
-            { name: "pCloud", url: "https://e.pcloud.link/publink/show?code=kZ701AZLKADbBmtCXumiLVKfn54JQX32MKy" },
-            { name: "MediaFire", url: "https://www.mediafire.com/folder/ffz29cwk5cdzx/78th+Nirankari+Sant+Samagam+2025" },
-            { name: "Fireload", url: "https://www.fireload.com/721a50ebb232aaed/78th_Nirankari_Sant_Samagaam.mp4" },
-            { name: "UploadFlix", url: "https://dl.uploadflix.com/ix77dqeqx4eh" },
-            { name: "Filemoon", url: "https://filemoon.org/LJlGn9bZz15w/file" },
-            { name: "BestFile 1", url: "https://bestfile.io/en/2qzP33JsNLhGfTM/file" },
-            { name: "BestFile 2", url: "https://bestfile.io/en/a8LrSnKoqcs32zh/file" },
-            { name: "Febbox 1", url: "https://www.febbox.com/share/uQzP3dJx" },
-            { name: "Febbox 2", url: "https://www.febbox.com/share/rAZTXkYU" },
-            { name: "Febbox 3", url: "https://www.febbox.com/share/fUURuOv1" }
-        ];
-
-        const cloudLoginLinks = [
-            { name: "TeraBox 1", url: "https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw?op_source=goldsharelink" },
-            { name: "TeraBox 2", url: "https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA" },
-            { name: "PikPak", url: "https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2" },
-            { name: "4Shared", url: "https://www.4shared.com/folder/ldxhi-wS/78th_Nirankari_Sant_Samagam_20.html" },
-            { name: "Dailymotion", url: "https://dai.ly/x9yofzm" }
-        ];
-
-        // Helper to extract domain from URL
+        // Helper functions
         function getDomain(url) {
-            try {
-                const hostname = new URL(url).hostname;
-                return hostname.replace(/^www\./, '');
-            } catch {
-                return '';
-            }
+            try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
         }
 
-        // Get favicon URL using DuckDuckGo service (works well)
         function getFaviconUrl(domain) {
-            if (!domain) return '';
-            return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+            return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : '';
         }
 
-        // Render section with favicons
-        function renderSection(containerId, items, showLoginBadge = false) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-            items.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'link-item';
-                
-                const domain = getDomain(item.url);
+        function incrementClick(url) {
+            clickCounts[url] = (clickCounts[url] || 0) + 1;
+            localStorage.setItem('linkClickCounts', JSON.stringify(clickCounts));
+            return clickCounts[url];
+        }
+
+        function openLink(url) {
+            incrementClick(url);
+            window.open(url, '_blank');
+            // Update display for that link's counter
+            const counterSpan = document.querySelector(`.click-count[data-url="${url}"]`);
+            if (counterSpan) counterSpan.textContent = clickCounts[url] || 0;
+        }
+
+        // Render all sections
+        const container = document.getElementById('sections-container');
+        container.innerHTML = '';
+        sections.forEach(section => {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'section';
+            sectionDiv.dataset.category = section.id;
+            sectionDiv.innerHTML = `
+                <div class="section-header">
+                    <h2>${section.title} <span class="badge-count">${section.links.length} Links</span></h2>
+                    <label class="select-all-section">
+                        <input type="checkbox" class="section-select-all" data-section="${section.id}"> Select All
+                    </label>
+                </div>
+                <div class="link-grid" id="${section.id}-links"></div>
+            `;
+            container.appendChild(sectionDiv);
+
+            const grid = document.getElementById(`${section.id}-links`);
+            section.links.forEach((link, idx) => {
+                const domain = getDomain(link.url);
                 const faviconUrl = getFaviconUrl(domain);
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'link-item';
+                itemDiv.dataset.url = link.url;
+                itemDiv.dataset.name = link.name;
                 
-                const loginTag = showLoginBadge ? '<span class="notice-tag">Login required</span>' : '';
-                const checkboxId = `chk_${containerId}_${index}`;
-                
-                div.innerHTML = `
+                const serial = serialCounter++;
+                const clickCount = clickCounts[link.url] || 0;
+                const loginBadge = section.id === 'cloud' ? '<span class="notice-tag">Login required</span>' : '';
+
+                itemDiv.innerHTML = `
                     <div class="link-checkbox">
-                        <input type="checkbox" class="link-check" id="${checkboxId}" data-url="${item.url}" data-name="${item.name}" data-section="${containerId}">
+                        <input type="checkbox" class="link-check" data-url="${link.url}" data-name="${link.name}">
                     </div>
+                    <div class="link-serial">${serial}.</div>
                     <div class="link-info">
                         <span class="platform-icon">
                             <img src="${faviconUrl}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" loading="lazy">
                             <span style="display:none; font-size:1.2rem;">🔗</span>
                         </span>
                         <div class="link-details">
-                            <div class="link-title">${item.name} ${loginTag}</div>
-                            <div class="link-url">${item.url}</div>
+                            <div class="link-title">${link.name} ${loginBadge}</div>
+                            <div class="link-url">${link.url}</div>
+                        </div>
+                    </div>
+                    <div class="link-stats">
+                        <div class="status-indicator">
+                            <span class="status-dot" data-url="${link.url}" title="Click to re-check"></span>
+                            <button class="recheck-btn" data-url="${link.url}" title="Check status">⟳</button>
+                        </div>
+                        <div class="click-counter">
+                            <span>👁️</span>
+                            <span class="click-count" data-url="${link.url}">${clickCount}</span>
                         </div>
                     </div>
                     <div class="actions">
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open</a>
-                        <button class="btn copy-btn" data-url="${item.url}">Copy</button>
-                        <button class="btn btn-share share-btn" data-url="${item.url}" data-title="${item.name}">Share</button>
+                        <button class="btn btn-primary open-btn">Open</button>
+                        <button class="btn copy-btn">Copy</button>
+                        <button class="btn btn-share share-btn">Share</button>
                     </div>
                 `;
-                container.appendChild(div);
+                grid.appendChild(itemDiv);
+            });
+        });
+
+        // Now attach event listeners
+        const allLinkItems = document.querySelectorAll('.link-item');
+        const contextMenu = document.getElementById('contextMenu');
+        let longPressTimer;
+        
+        // Context menu actions
+        contextMenu.addEventListener('click', (e) => {
+            const action = e.target.closest('[data-action]')?.dataset.action;
+            if (!action || !currentContextLink) return;
+            const url = currentContextLink.dataset.url;
+            if (action === 'open') openLink(url);
+            else if (action === 'copy') {
+                navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+            } else if (action === 'share') {
+                if (navigator.share) {
+                    navigator.share({ title: currentContextLink.dataset.name, url });
+                } else {
+                    navigator.clipboard.writeText(url).then(() => alert('Link copied (share not supported)'));
+                }
+            }
+            contextMenu.classList.remove('show');
+        });
+
+        // Hide context menu on outside click
+        document.addEventListener('click', () => contextMenu.classList.remove('show'));
+        document.addEventListener('contextmenu', (e) => {
+            if (!e.target.closest('.link-item')) contextMenu.classList.remove('show');
+        });
+
+        // Link item interactions
+        allLinkItems.forEach(item => {
+            const url = item.dataset.url;
+            
+            // Tile click to open (avoid if clicking on buttons/checkbox)
+            item.addEventListener('click', (e) => {
+                if (e.target.closest('button, a, input, .status-dot, .recheck-btn')) return;
+                openLink(url);
             });
 
-            // Attach single copy/share listeners
-            container.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const url = btn.getAttribute('data-url');
-                    try {
-                        await navigator.clipboard.writeText(url);
-                        btn.textContent = '✓ Copied';
-                        setTimeout(() => btn.textContent = 'Copy', 1500);
-                    } catch {
-                        alert('Unable to copy');
-                    }
-                });
+            // Long press for mobile
+            item.addEventListener('touchstart', (e) => {
+                if (e.target.closest('button, a, input')) return;
+                longPressTimer = setTimeout(() => {
+                    currentContextLink = item;
+                    const touch = e.touches[0];
+                    contextMenu.style.left = touch.clientX + 'px';
+                    contextMenu.style.top = touch.clientY + 'px';
+                    contextMenu.classList.add('show');
+                }, 500);
+            });
+            item.addEventListener('touchend', () => clearTimeout(longPressTimer));
+            item.addEventListener('touchmove', () => clearTimeout(longPressTimer));
+
+            // Right-click
+            item.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                currentContextLink = item;
+                contextMenu.style.left = e.clientX + 'px';
+                contextMenu.style.top = e.clientY + 'px';
+                contextMenu.classList.add('show');
             });
 
-            container.querySelectorAll('.share-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const url = btn.getAttribute('data-url');
-                    const title = btn.getAttribute('data-title');
-                    if (navigator.share) {
-                        try {
-                            await navigator.share({ title, text: `Check out: ${title}`, url });
-                        } catch (err) {
-                            if (err.name !== 'AbortError') fallbackCopy(url, btn);
-                        }
-                    } else {
-                        fallbackCopy(url, btn);
-                    }
-                });
-            });
-
-            function fallbackCopy(url, button) {
+            // Buttons
+            item.querySelector('.open-btn').addEventListener('click', (e) => { e.stopPropagation(); openLink(url); });
+            item.querySelector('.copy-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
                 navigator.clipboard.writeText(url).then(() => {
-                    button.textContent = 'Link Copied';
-                    setTimeout(() => button.textContent = 'Share', 1500);
-                }).catch(() => alert('Link copied manually.'));
+                    const btn = e.target;
+                    btn.textContent = '✓';
+                    setTimeout(() => btn.textContent = 'Copy', 1000);
+                });
+            });
+            item.querySelector('.share-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (navigator.share) {
+                    navigator.share({ title: item.dataset.name, url });
+                } else {
+                    navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+                }
+            });
+        });
+
+        // Status checker
+        async function checkLinkStatus(url, dotElement) {
+            dotElement.classList.add('checking');
+            dotElement.classList.remove('live', 'dead');
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                // Try to fetch with no-cors to see if reachable
+                await fetch(url, { mode: 'no-cors', signal: controller.signal });
+                clearTimeout(timeoutId);
+                dotElement.classList.add('live');
+            } catch {
+                dotElement.classList.add('dead');
+            } finally {
+                dotElement.classList.remove('checking');
             }
         }
 
-        // Render all sections
-        renderSection('stream-links', streamLinks);
-        renderSection('stream-download-links', streamDownloadLinks);
-        renderSection('download-links', downloadLinks);
-        renderSection('cloud-links', cloudLoginLinks, true);
+        document.querySelectorAll('.status-dot').forEach(dot => {
+            const url = dot.dataset.url;
+            checkLinkStatus(url, dot);
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                checkLinkStatus(url, dot);
+            });
+        });
 
-        // Update counts
-        document.getElementById('stream-count').textContent = streamLinks.length + ' Links';
-        document.getElementById('streamdl-count').textContent = streamDownloadLinks.length + ' Links';
-        document.getElementById('download-count').textContent = downloadLinks.length + ' Links';
-        document.getElementById('cloud-count').textContent = cloudLoginLinks.length + ' Links';
+        document.querySelectorAll('.recheck-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const url = btn.dataset.url;
+                const dot = btn.parentElement.querySelector('.status-dot');
+                checkLinkStatus(url, dot);
+            });
+        });
 
-        // ---------- THEME SWITCHER ----------
+        // Theme switcher
         const themeOptions = document.querySelectorAll('.theme-option');
-        const htmlElement = document.documentElement;
-        
-        themeOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                const theme = option.dataset.theme;
-                htmlElement.setAttribute('data-theme', theme);
-                themeOptions.forEach(opt => opt.classList.remove('active'));
-                option.classList.add('active');
-                // Save preference
+        const html = document.documentElement;
+        themeOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const theme = opt.dataset.theme;
+                html.setAttribute('data-theme', theme);
+                themeOptions.forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
                 localStorage.setItem('theme', theme);
             });
         });
-
-        // Load saved theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
-        htmlElement.setAttribute('data-theme', savedTheme);
-        themeOptions.forEach(opt => {
-            opt.classList.toggle('active', opt.dataset.theme === savedTheme);
-        });
+        html.setAttribute('data-theme', savedTheme);
+        themeOptions.forEach(o => o.classList.toggle('active', o.dataset.theme === savedTheme));
 
-        // ---------- BATCH SELECTION LOGIC (same as before) ----------
-        const allCheckboxes = document.querySelectorAll('.link-check');
+        // Batch selection logic (same as before but adapted)
         const batchBar = document.getElementById('batchBar');
         const selectedCountSpan = document.getElementById('selectedCount');
-        const batchCopyBtn = document.getElementById('batchCopyBtn');
-        const batchShareBtn = document.getElementById('batchShareBtn');
-        const clearSelectionBtn = document.getElementById('clearSelectionBtn');
-        const globalSelectAllBtn = document.getElementById('globalSelectAllBtn');
-        const sectionSelectAllCheckboxes = document.querySelectorAll('.section-select-all');
+        const allChecks = document.querySelectorAll('.link-check');
+        const sectionSelects = document.querySelectorAll('.section-select-all');
+        const globalSelectBtn = document.getElementById('globalSelectAllBtn');
 
-        function updateBatchBar() {
+        function updateBatchUI() {
             const checked = document.querySelectorAll('.link-check:checked');
             const count = checked.length;
-            if (count > 0) {
-                batchBar.classList.add('show');
-                selectedCountSpan.textContent = `${count} selected`;
-            } else {
-                batchBar.classList.remove('show');
-            }
-            updateSectionSelectAllState();
-        }
-
-        function updateSectionSelectAllState() {
-            const sections = ['stream-links', 'stream-download-links', 'download-links', 'cloud-links'];
-            sections.forEach(sectionId => {
-                const container = document.getElementById(sectionId);
-                if (!container) return;
-                const checkboxes = container.querySelectorAll('.link-check');
-                const checked = container.querySelectorAll('.link-check:checked');
-                const sectionCheck = document.querySelector(`.section-select-all[data-section="${sectionId.replace('-links','')}"]`);
-                if (sectionCheck) {
-                    if (checked.length === checkboxes.length && checkboxes.length > 0) {
-                        sectionCheck.checked = true;
-                        sectionCheck.indeterminate = false;
-                    } else if (checked.length > 0) {
-                        sectionCheck.checked = false;
-                        sectionCheck.indeterminate = true;
-                    } else {
-                        sectionCheck.checked = false;
-                        sectionCheck.indeterminate = false;
-                    }
+            batchBar.classList.toggle('show', count > 0);
+            selectedCountSpan.textContent = `${count} selected`;
+            
+            sectionSelects.forEach(select => {
+                const sectionId = select.dataset.section;
+                const checks = document.querySelectorAll(`#${sectionId}-links .link-check`);
+                const checkedInSection = document.querySelectorAll(`#${sectionId}-links .link-check:checked`);
+                if (checks.length === 0) return;
+                if (checkedInSection.length === checks.length) {
+                    select.checked = true;
+                    select.indeterminate = false;
+                } else if (checkedInSection.length > 0) {
+                    select.checked = false;
+                    select.indeterminate = true;
+                } else {
+                    select.checked = false;
+                    select.indeterminate = false;
                 }
             });
-            const totalCheckboxes = document.querySelectorAll('.link-check').length;
-            const totalChecked = document.querySelectorAll('.link-check:checked').length;
-            if (totalChecked === totalCheckboxes) {
-                globalSelectAllBtn.textContent = '☒ Deselect All';
-            } else {
-                globalSelectAllBtn.textContent = '☑ Select All Links';
-            }
+            
+            const total = allChecks.length;
+            const totalChecked = checked.length;
+            globalSelectBtn.textContent = totalChecked === total ? '☒ Deselect All' : '☑ Select All Links';
         }
 
-        allCheckboxes.forEach(cb => cb.addEventListener('change', updateBatchBar));
-
-        sectionSelectAllCheckboxes.forEach(sectionCheck => {
-            sectionCheck.addEventListener('change', function(e) {
-                const section = this.dataset.section;
-                let containerId;
-                if (section === 'stream') containerId = 'stream-links';
-                else if (section === 'streamdl') containerId = 'stream-download-links';
-                else if (section === 'download') containerId = 'download-links';
-                else if (section === 'cloud') containerId = 'cloud-links';
-                else return;
-                
-                const container = document.getElementById(containerId);
-                if (!container) return;
-                const checkboxes = container.querySelectorAll('.link-check');
-                const isChecked = this.checked;
-                checkboxes.forEach(cb => cb.checked = isChecked);
-                updateBatchBar();
+        allChecks.forEach(cb => cb.addEventListener('change', updateBatchUI));
+        
+        sectionSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                const sectionId = this.dataset.section;
+                const checks = document.querySelectorAll(`#${sectionId}-links .link-check`);
+                checks.forEach(cb => cb.checked = this.checked);
+                updateBatchUI();
             });
         });
 
-        globalSelectAllBtn.addEventListener('click', function() {
-            const allCb = document.querySelectorAll('.link-check');
-            const totalChecked = document.querySelectorAll('.link-check:checked').length;
-            const shouldCheck = totalChecked !== allCb.length;
-            allCb.forEach(cb => cb.checked = shouldCheck);
-            updateBatchBar();
+        globalSelectBtn.addEventListener('click', () => {
+            const shouldCheck = !(document.querySelectorAll('.link-check:checked').length === allChecks.length);
+            allChecks.forEach(cb => cb.checked = shouldCheck);
+            updateBatchUI();
         });
 
-        clearSelectionBtn.addEventListener('click', function() {
-            document.querySelectorAll('.link-check').forEach(cb => cb.checked = false);
-            document.querySelectorAll('.section-select-all').forEach(sc => {
-                sc.checked = false;
-                sc.indeterminate = false;
-            });
-            updateBatchBar();
+        document.getElementById('clearSelectionBtn').addEventListener('click', () => {
+            allChecks.forEach(cb => cb.checked = false);
+            updateBatchUI();
         });
 
-        batchCopyBtn.addEventListener('click', function() {
+        document.getElementById('batchCopyBtn').addEventListener('click', () => {
             const checked = document.querySelectorAll('.link-check:checked');
-            if (checked.length === 0) return;
-            
-            let textToCopy = '';
-            checked.forEach(cb => {
-                const name = cb.dataset.name;
-                const url = cb.dataset.url;
-                textToCopy += `${name} - ${url}\n`;
-            });
-            
-            navigator.clipboard.writeText(textToCopy.trim()).then(() => {
-                batchCopyBtn.textContent = '✓ Copied!';
-                setTimeout(() => batchCopyBtn.textContent = '📋 Copy Selected', 1500);
-            }).catch(() => alert('Copy failed'));
+            if (!checked.length) return;
+            let text = '';
+            checked.forEach(cb => text += `${cb.dataset.name} - ${cb.dataset.url}\n`);
+            navigator.clipboard.writeText(text).then(() => alert('Copied selected links!'));
         });
 
-        batchShareBtn.addEventListener('click', async function() {
+        document.getElementById('batchShareBtn').addEventListener('click', () => {
             const checked = document.querySelectorAll('.link-check:checked');
-            if (checked.length === 0) return;
-            
-            let shareText = '';
-            checked.forEach(cb => {
-                shareText += `${cb.dataset.name}: ${cb.dataset.url}\n`;
-            });
-            
+            if (!checked.length) return;
+            let text = '';
+            checked.forEach(cb => text += `${cb.dataset.name}: ${cb.dataset.url}\n`);
             if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: 'Nirankari Sant Samagam Links',
-                        text: shareText,
-                    });
-                } catch (err) {
-                    if (err.name !== 'AbortError') fallbackCopy(shareText);
-                }
+                navigator.share({ title: 'Selected Links', text });
             } else {
-                fallbackCopy(shareText);
-            }
-            
-            function fallbackCopy(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    batchShareBtn.textContent = '✓ Links Copied';
-                    setTimeout(() => batchShareBtn.textContent = '📤 Share Selected', 1500);
-                }).catch(() => alert('Unable to share, links copied to clipboard manually.'));
+                navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'));
             }
         });
 
-        updateBatchBar();
+        updateBatchUI();
     })();
 </script>
 </body>
