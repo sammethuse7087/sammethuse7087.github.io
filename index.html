@@ -1,177 +1,454 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>78th Nirankari Samagam</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>78th Nirankari Sant Samagam 2025 | Media Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
 
-<style>
-body{
-background:#0b0b0b;
-color:white;
-font-family:Arial;
-padding:10px;
-}
+        body {
+            background: #0b0f19;
+            color: #e3e8f0;
+            padding: 20px;
+            line-height: 1.5;
+        }
 
-h1{
-text-align:center;
-color:#00ffcc;
-}
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(18, 25, 40, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border: 1px solid #2a3a55;
+        }
 
-.section{
-margin:20px 0;
-padding:15px;
-background:#062e1f;
-border-radius:12px;
-}
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-.section h2{
-color:#ff9900;
-}
+        .subhead {
+            color: #9ca8c4;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #2e3f5e;
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
 
-.card{
-background:#064d33;
-margin:10px 0;
-padding:15px;
-border-radius:10px;
-word-break:break-all;
-}
+        .total-badge {
+            background: #1e2b47;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #b7c9e2;
+            border: 1px solid #3b5075;
+        }
 
-.btns{
-margin-top:8px;
-}
+        .section {
+            margin-bottom: 35px;
+            background: #101b2b;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #263750;
+            box-shadow: 0 8px 0 #080c14;
+        }
 
-button{
-margin:3px;
-padding:6px 10px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-.open{background:black;color:white;}
-.copy{background:#00cc66;color:black;}
-.share{background:orange;color:black;}
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #d6e3ff;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.footer{
-text-align:center;
-margin-top:20px;
-color:#aaa;
-}
-</style>
+        .badge-count {
+            background: #2d4370;
+            color: white;
+            border-radius: 30px;
+            padding: 3px 14px;
+            font-size: 0.9rem;
+            margin-left: 15px;
+            font-weight: 400;
+        }
+
+        .link-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link-item {
+            background: #162235;
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-left: 6px solid #4f7df3;
+            transition: all 0.15s ease;
+            border: 1px solid #2f4468;
+            border-left-width: 6px;
+        }
+
+        .link-item:hover {
+            background: #1e304b;
+            border-left-color: #a78bfa;
+            transform: translateX(4px);
+        }
+
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .platform-icon {
+            font-size: 1.5rem;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .link-details {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: #f0f4ff;
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .link-url {
+            font-size: 0.8rem;
+            color: #90a4d0;
+            word-break: break-all;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn {
+            background: #253a5e;
+            border: none;
+            color: #d4e0ff;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid #405e88;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #3a5a8c;
+            color: white;
+            border-color: #6f9ae0;
+        }
+
+        .btn-primary {
+            background: #3b5b9b;
+            color: white;
+            border-color: #6a93e0;
+        }
+
+        .btn-primary:hover {
+            background: #4f7bc9;
+        }
+
+        .btn-share {
+            background: #2e4a3e;
+            border-color: #4b7a5e;
+            color: #d0f0d0;
+        }
+
+        .btn-share:hover {
+            background: #3f6e55;
+            color: white;
+        }
+
+        .notice-tag {
+            background: #6b4e1e;
+            color: #ffdf9c;
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #7f93b9;
+            font-size: 0.85rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 18px 12px; }
+            h1 { font-size: 1.8rem; }
+            .link-item { flex-direction: column; align-items: stretch; gap: 12px; }
+            .actions { justify-content: flex-end; }
+        }
+    </style>
 </head>
-
 <body>
+<div class="container">
+    <h1>🕊️ 78th Nirankari Sant Samagam 2025</h1>
+    <div class="subhead">
+        <span>All video and download links in one place</span>
+        <span class="total-badge">📎 Total 66 Links</span>
+    </div>
 
-<h1>🔥 78th Nirankari Samagam 🔥</h1>
+    <!-- SECTION: STREAM -->
+    <div class="section">
+        <div class="section-header">
+            <h2>🎬 Stream <span class="badge-count" id="stream-count">10 Links</span></h2>
+        </div>
+        <div class="link-grid" id="stream-links"></div>
+    </div>
 
-<div id="app"></div>
+    <!-- SECTION: STREAM & DOWNLOAD -->
+    <div class="section">
+        <div class="section-header">
+            <h2>📡 Stream & Download <span class="badge-count" id="streamdl-count">38 Links</span></h2>
+        </div>
+        <div class="link-grid" id="stream-download-links"></div>
+    </div>
 
-<div class="footer" id="count"></div>
+    <!-- SECTION: DOWNLOAD ONLY -->
+    <div class="section">
+        <div class="section-header">
+            <h2>⬇️ Download <span class="badge-count" id="download-count">13 Links</span></h2>
+        </div>
+        <div class="link-grid" id="download-links"></div>
+    </div>
+
+    <!-- SECTION: CLOUD LOGIN -->
+    <div class="section">
+        <div class="section-header">
+            <h2>☁️ Cloud Login <span class="badge-count" id="cloud-count">5 Links</span></h2>
+        </div>
+        <div class="link-grid" id="cloud-links"></div>
+    </div>
+
+    <footer>
+        ⚡ All links open on respective platforms. Enjoy the Satsang.
+    </footer>
+</div>
 
 <script>
+    (function() {
+        // ---------- DATA ----------
+        const streamLinks = [
+            { name: "Rumble", url: "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html" },
+            { name: "D.Tube", url: "https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ" },
+            { name: "Rutube", url: "https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/" },
+            { name: "VK Video", url: "https://m.vkvideo.ru/video-235745371_456239017" },
+            { name: "OK.ru", url: "https://m.ok.ru/video/12150196210357" },
+            { name: "Brighteon", url: "https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905" },
+            { name: "Vimeo", url: "https://vimeo.com/1159540263?fl=pl&fe=sh" },
+            { name: "Niconico", url: "https://www.nicovideo.jp/watch/sm45887902" },
+            { name: "Trovo (1)", url: "https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608" },
+            { name: "Trovo (2)", url: "https://trovo.live/s/sammethuse/549873486261" }
+        ];
 
-const data = {
-"Stream":[
-"https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html",
-"https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ",
-"https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/",
-"https://m.vkvideo.ru/video-235745371_456239017",
-"https://m.ok.ru/video/12150196210357",
-"https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905",
-"https://vimeo.com/1159540263",
-"https://www.nicovideo.jp/watch/sm45887902",
-"https://trovo.live/s/sammethuse/549873486261",
-"https://trovo.live/s/sammethuse/549873486261?vid=up-5145403715168375608"
-],
+        const streamDownloadLinks = [
+            { name: "StreamRuby", url: "https://streamruby.com/m00wtf3n2ypy.html" },
+            { name: "Nirankar Seeks", url: "https://nirankar.seeks.cloud/#lh1sz&dl=1" },
+            { name: "Dri.me", url: "https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1" },
+            { name: "Player4Me", url: "https://nirankar.player4me.vip/#d1l6i&dl=1" },
+            { name: "SendVid", url: "https://sendvid.com/gof5vy7y" },
+            { name: "Archive.org", url: "https://archive.org/details/78th-nirankari-samagum-2025" },
+            { name: "Liberta.vip", url: "https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q" },
+            { name: "KrakenFiles", url: "https://krakenfiles.com/view/JzQoPeA9lK/file.html" },
+            { name: "Google Photos", url: "https://photos.app.goo.gl/rzPwhaZF2HSDf51A8" },
+            { name: "JioCloud 1", url: "https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA" },
+            { name: "JioCloud 2", url: "https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU" },
+            { name: "JioCloud 3", url: "https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW" },
+            { name: "Google Drive", url: "https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId" },
+            { name: "TotalDrive", url: "https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1" },
+            { name: "Bit.ly", url: "https://bit.ly/3Nhmxtt" },
+            { name: "OneDrive", url: "https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k" },
+            { name: "Icedrive", url: "https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt" },
+            { name: "Dropbox", url: "https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m/APiTwgZOco9R2CWHk4vVw08?rlkey=78gxp554jq5itl0pacjyu06da&st=2nue4nsk&dl=0" },
+            { name: "Proton Drive 1", url: "https://drive.proton.me/urls/WV01AKA3A0#k3Ad4731GFrw" },
+            { name: "Proton Drive 2", url: "https://drive.proton.me/urls/AHD8AHFETG#4czT7Av9d3HM" },
+            { name: "Proton Drive 3", url: "https://drive.proton.me/urls/NSD2X49Q4W#eoD-Po7lcODB" },
+            { name: "MEGA 1", url: "https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw" },
+            { name: "MEGA 2", url: "https://mega.nz/folder/zcMiAIqb#Wsz9dd23FsjIGu8C6rRolQ" },
+            { name: "Files.fm (1)", url: "https://files.fm/u/ma2g5bcfvb" },
+            { name: "Files.fm (2)", url: "https://files.fm/u/ma2g5bcfvb?k=613960f6" },
+            { name: "Files.fm (3)", url: "https://files.fm/u/ma2g5bcfvb?ak=43f5b" },
+            { name: "AnonFilesNew", url: "https://anonfilesnew.com/s/gCplY7AhEW0" },
+            { name: "Zoho WorkDrive", url: "https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f" },
+            { name: "Yandex Disk", url: "https://disk.yandex.com/d/J-3HqbbTahnEsw" },
+            { name: "MakerTube", url: "https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD" },
+            { name: "BitChute", url: "https://www.bitchute.com/video/yFPRwvGW7XTF" },
+            { name: "Odysee", url: "https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d" },
+            { name: "LuluVdoo 1", url: "https://luluvdoo.com/d/tpuvgibz5cbt" },
+            { name: "LuluVdoo 2", url: "https://luluvdoo.com/d/6sbt9rw10qtg" },
+            { name: "Box", url: "https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q" },
+            { name: "Jottacloud", url: "https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979" },
+            { name: "DOI/Figshare", url: "https://doi.org/10.6084/m9.figshare.31276960" },
+            { name: "Figshare", url: "https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960" }
+        ];
 
-"Stream & Download":[
-"https://streamruby.com/m00wtf3n2ypy.html",
-"https://nirankar.seeks.cloud/#lh1sz&dl=1",
-"https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1",
-"https://nirankar.player4me.vip/#d1l6i&dl=1",
-"https://sendvid.com/gof5vy7y",
-"https://archive.org/details/78th-nirankari-samagum-2025",
-"https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q",
-"https://krakenfiles.com/view/JzQoPeA9lK/file.html",
-"https://photos.app.goo.gl/rzPwhaZF2HSDf51A8",
-"https://www.jioaicloud.com/l/?u=he6pt8vCdad81NDUF9aql7lfG2KI8g8uJ2fhEd-n4AH3RqiHTU0oUzLu2iKA2DtoMZA",
-"https://www.jioaicloud.com/l/?u=HyodVXmEMlSXdk0xP1lXzyChQLbwQIQdCjNa_mFuwq448UJh2L9B-jwseQvxfgSIVaU",
-"https://www.jioaicloud.com/l/?u=hh0O7qOjDbz4iXuexJ77f5HeDByNTYYmcMJ9q82QX8Df1ABWyCZiXtSPPzcZDuGcMHW",
-"https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId",
-"https://my.totaldrive.com/share/f/BAmLCoUASZ2qYrKEHq_LqzAxNzk0NDUyMzQ2NzFfNzUzNDI1",
-"https://bit.ly/3Nhmxtt",
-"https://1drv.ms/f/c/71c3dc4635d9120e/IgCclKu8B5fESIU0zhPZMPPuAaRgd1e2ZjUmSWCe-eYWh5k",
-"https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt",
-"https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m",
-"https://drive.proton.me/urls/WV01AKA3A0",
-"https://drive.proton.me/urls/AHD8AHFETG",
-"https://drive.proton.me/urls/NSD2X49Q4W",
-"https://mega.nz/folder/8J0EGA7D",
-"https://mega.nz/folder/zcMiAIqb",
-"https://files.fm/u/ma2g5bcfvb",
-"https://files.fm/u/ma2g5bcfvb?k=613960f6",
-"https://files.fm/u/ma2g5bcfvb?ak=43f5b",
-"https://anonfilesnew.com/s/gCplY7AhEW0",
-"https://workdrive.zohoexternal.in/folder/p39vw400727ec13af4696838e97b6281bbe3f",
-"https://disk.yandex.com/d/J-3HqbbTahnEsw",
-"https://makertube.net/w/rNBu8noLqCrWXcmAioKGFD",
-"https://www.bitchute.com/video/yFPRwvGW7XTF",
-"https://odysee.com/@sammethuse:a/Nirankari-Samagam-2025:d",
-"https://luluvdoo.com/d/tpuvgibz5cbt",
-"https://luluvdoo.com/d/6sbt9rw10qtg",
-"https://app.box.com/s/k2wjm831b5g7t4ty1g8kiq5uqglju83q",
-"https://jottacloud.com/s/44426a51382ef784f75aa1f6d53275e9979",
-"https://doi.org/10.6084/m9.figshare.31276960",
-"https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960"
-],
+        const downloadLinks = [
+            { name: "Cimediacloud", url: "https://app.cimediacloud.com/r/oFT3XPzKZJON" },
+            { name: "Internxt", url: "https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7/W-X7M66V" },
+            { name: "Mobidrive", url: "https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX" },
+            { name: "pCloud", url: "https://e.pcloud.link/publink/show?code=kZ701AZLKADbBmtCXumiLVKfn54JQX32MKy" },
+            { name: "MediaFire", url: "https://www.mediafire.com/folder/ffz29cwk5cdzx/78th+Nirankari+Sant+Samagam+2025" },
+            { name: "Fireload", url: "https://www.fireload.com/721a50ebb232aaed/78th_Nirankari_Sant_Samagaam.mp4" },
+            { name: "UploadFlix", url: "https://dl.uploadflix.com/ix77dqeqx4eh" },
+            { name: "Filemoon", url: "https://filemoon.org/LJlGn9bZz15w/file" },
+            { name: "BestFile 1", url: "https://bestfile.io/en/2qzP33JsNLhGfTM/file" },
+            { name: "BestFile 2", url: "https://bestfile.io/en/a8LrSnKoqcs32zh/file" },
+            { name: "Febbox 1", url: "https://www.febbox.com/share/uQzP3dJx" },
+            { name: "Febbox 2", url: "https://www.febbox.com/share/rAZTXkYU" },
+            { name: "Febbox 3", url: "https://www.febbox.com/share/fUURuOv1" }
+        ];
 
-"Download":[
-"https://app.cimediacloud.com/r/oFT3XPzKZJON",
-"https://share.internxt.com/sh/file/bf13cb64-2aab-4ece-9a28-46f575e5c8a7",
-"https://mobidrive.com/sharelink/f/3S38YfYLm6xI3mkO3OAv947SG9D0qxAcdm2UYeav8WSX",
-"https://e.pcloud.link/publink/show",
-"https://www.mediafire.com/folder/ffz29cwk5cdzx",
-"https://www.fireload.com/721a50ebb232aaed",
-"https://dl.uploadflix.com/ix77dqeqx4eh",
-"https://filemoon.org/LJlGn9bZz15w/file",
-"https://bestfile.io/en/2qzP33JsNLhGfTM/file",
-"https://bestfile.io/en/a8LrSnKoqcs32zh/file",
-"https://www.febbox.com/share/uQzP3dJx",
-"https://www.febbox.com/share/rAZTXkYU",
-"https://www.febbox.com/share/fUURuOv1"
-],
+        const cloudLoginLinks = [
+            { name: "TeraBox 1", url: "https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw?op_source=goldsharelink" },
+            { name: "TeraBox 2", url: "https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA" },
+            { name: "PikPak", url: "https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2" },
+            { name: "4Shared", url: "https://www.4shared.com/folder/ldxhi-wS/78th_Nirankari_Sant_Samagam_20.html" },
+            { name: "Dailymotion", url: "https://dai.ly/x9yofzm" }
+        ];
 
-"Cloud Login":[
-"https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw",
-"https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA",
-"https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2",
-"https://www.4shared.com/folder/ldxhi-wS",
-"https://dai.ly/x9yofzm"
-]
-};
+        // Helper to render section
+        function renderSection(containerId, items, showLoginBadge = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'link-item';
 
-let total = 0;
-const app = document.getElementById("app");
+                // Icon logic
+                let icon = '🔗';
+                const n = item.name.toLowerCase();
+                if (n.includes('rumble')||n.includes('vimeo')||n.includes('dailymotion')) icon = '🎬';
+                else if (n.includes('drive')||n.includes('mega')||n.includes('dropbox')||n.includes('cloud')) icon = '☁️';
+                else if (n.includes('download')||n.includes('mediafire')) icon = '⬇️';
+                else icon = '📁';
 
-for (let category in data){
-let section = `<div class="section"><h2>${category}</h2>`;
-data[category].forEach(link=>{
-total++;
-section += `<div class="card">${link}
-<div class="btns">
-<button class="open" onclick="window.open('${link}')">Open</button>
-<button class="copy" onclick="navigator.clipboard.writeText('${link}')">Copy</button>
-<button class="share" onclick="navigator.share({url:'${link}'})">Share</button>
-</div></div>`;
-});
-section += `</div>`;
-app.innerHTML += section;
-}
+                const loginTag = showLoginBadge ? '<span class="notice-tag">Login required</span>' : '';
 
-document.getElementById("count").innerText = "⭐ Total Links: " + total;
+                div.innerHTML = `
+                    <div class="link-info">
+                        <span class="platform-icon">${icon}</span>
+                        <div class="link-details">
+                            <div class="link-title">${item.name} ${loginTag}</div>
+                            <div class="link-url">${item.url}</div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open</a>
+                        <button class="btn copy-btn" data-url="${item.url}">Copy</button>
+                        <button class="btn btn-share share-btn" data-url="${item.url}" data-title="${item.name}">Share</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
 
+            // Attach event listeners for copy and share
+            container.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const url = btn.getAttribute('data-url');
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        btn.textContent = '✓ Copied';
+                        setTimeout(() => btn.textContent = 'Copy', 1500);
+                    } catch {
+                        alert('Unable to copy. Please do it manually.');
+                    }
+                });
+            });
+
+            container.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const url = btn.getAttribute('data-url');
+                    const title = btn.getAttribute('data-title');
+                    if (navigator.share) {
+                        try {
+                            await navigator.share({
+                                title: title,
+                                text: `Check out: ${title}`,
+                                url: url,
+                            });
+                        } catch (err) {
+                            if (err.name !== 'AbortError') {
+                                fallbackCopy(url, btn);
+                            }
+                        }
+                    } else {
+                        fallbackCopy(url, btn);
+                    }
+                });
+            });
+
+            function fallbackCopy(url, button) {
+                navigator.clipboard.writeText(url).then(() => {
+                    button.textContent = 'Link Copied';
+                    setTimeout(() => button.textContent = 'Share', 1500);
+                }).catch(() => alert('Link copied manually.'));
+            }
+        }
+
+        // Render all sections
+        renderSection('stream-links', streamLinks);
+        renderSection('stream-download-links', streamDownloadLinks);
+        renderSection('download-links', downloadLinks);
+        renderSection('cloud-links', cloudLoginLinks, true);
+
+        // Update counts dynamically (optional)
+        document.getElementById('stream-count').textContent = streamLinks.length + ' Links';
+        document.getElementById('streamdl-count').textContent = streamDownloadLinks.length + ' Links';
+        document.getElementById('download-count').textContent = downloadLinks.length + ' Links';
+        document.getElementById('cloud-count').textContent = cloudLoginLinks.length + ' Links';
+    })();
 </script>
-
 </body>
 </html>
