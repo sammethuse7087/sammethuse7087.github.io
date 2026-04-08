@@ -5,6 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>78th Nirankari Sant Samagam 2025 | Media Links</title>
     <style>
+        /* ---------- CSS Variables for Themes ---------- */
+        :root {
+            --bg-body: #0b0f19;
+            --bg-container: rgba(18, 25, 40, 0.9);
+            --text-primary: #e3e8f0;
+            --text-secondary: #9ca8c4;
+            --border-light: #2a3a55;
+            --section-bg: #101b2b;
+            --section-border: #263750;
+            --item-bg: #162235;
+            --item-border: #2f4468;
+            --item-hover-bg: #1e304b;
+            --accent-primary: #4f7df3;
+            --accent-hover: #a78bfa;
+            --btn-bg: #253a5e;
+            --btn-border: #405e88;
+            --btn-hover-bg: #3a5a8c;
+            --badge-bg: #1e2b47;
+            --badge-text: #b7c9e2;
+            --count-badge-bg: #2d4370;
+            --notice-bg: #6b4e1e;
+            --notice-text: #ffdf9c;
+            --batch-bar-bg: #0f1a2b;
+            --shadow: rgba(0,0,0,0.6);
+            --icon-filter: none;
+        }
+
+        /* AMOLED Black Theme */
+        [data-theme="amoled"] {
+            --bg-body: #000000;
+            --bg-container: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-light: #222222;
+            --section-bg: #0a0a0a;
+            --section-border: #2a2a2a;
+            --item-bg: #121212;
+            --item-border: #333333;
+            --item-hover-bg: #1a1a1a;
+            --accent-primary: #4f7df3;
+            --accent-hover: #a78bfa;
+            --btn-bg: #1a2a3a;
+            --btn-border: #3a4a5a;
+            --btn-hover-bg: #2a3a4a;
+            --badge-bg: #1a1a1a;
+            --badge-text: #c0c0c0;
+            --count-badge-bg: #1e3a5f;
+            --notice-bg: #4a3510;
+            --notice-text: #ffdf9c;
+            --batch-bar-bg: #000000;
+            --shadow: rgba(255,255,255,0.05);
+        }
+
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-body: #f5f7fa;
+            --bg-container: #ffffff;
+            --text-primary: #1a1f2e;
+            --text-secondary: #4a5568;
+            --border-light: #e2e8f0;
+            --section-bg: #f8fafc;
+            --section-border: #d1d9e6;
+            --item-bg: #ffffff;
+            --item-border: #cbd5e1;
+            --item-hover-bg: #f1f5f9;
+            --accent-primary: #3b82f6;
+            --accent-hover: #8b5cf6;
+            --btn-bg: #e2e8f0;
+            --btn-border: #94a3b8;
+            --btn-hover-bg: #cbd5e1;
+            --badge-bg: #e2e8f0;
+            --badge-text: #1e293b;
+            --count-badge-bg: #3b82f6;
+            --notice-bg: #fef3c7;
+            --notice-text: #92400e;
+            --batch-bar-bg: #ffffff;
+            --shadow: rgba(0,0,0,0.1);
+            --icon-filter: none;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,21 +93,56 @@
         }
 
         body {
-            background: #0b0f19;
-            color: #e3e8f0;
+            background: var(--bg-body);
+            color: var(--text-primary);
             padding: 20px 20px 100px;
             line-height: 1.5;
+            transition: background 0.2s, color 0.2s;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            background: rgba(18, 25, 40, 0.9);
+            background: var(--bg-container);
             backdrop-filter: blur(10px);
             border-radius: 24px;
             padding: 30px 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            border: 1px solid #2a3a55;
+            box-shadow: 0 20px 40px var(--shadow);
+            border: 1px solid var(--border-light);
+            transition: background 0.2s, border 0.2s;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .theme-toggle {
+            background: var(--section-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 4px;
+            display: inline-flex;
+            gap: 5px;
+        }
+
+        .theme-option {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .theme-option.active {
+            background: var(--accent-primary);
+            color: white;
         }
 
         h1 {
@@ -41,10 +156,16 @@
             letter-spacing: -0.5px;
         }
 
+        [data-theme="light"] h1 {
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
         .subhead {
-            color: #9ca8c4;
+            color: var(--text-secondary);
             margin-bottom: 30px;
-            border-bottom: 1px solid #2e3f5e;
+            border-bottom: 1px solid var(--border-light);
             padding-bottom: 15px;
             display: flex;
             justify-content: space-between;
@@ -53,18 +174,18 @@
         }
 
         .total-badge {
-            background: #1e2b47;
+            background: var(--badge-bg);
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.9rem;
             font-weight: 500;
-            color: #b7c9e2;
-            border: 1px solid #3b5075;
+            color: var(--badge-text);
+            border: 1px solid var(--border-light);
         }
 
         .global-select-all {
-            background: #2d4370;
-            border: 1px solid #5a7ab3;
+            background: var(--count-badge-bg);
+            border: 1px solid var(--accent-primary);
             color: white;
             padding: 6px 16px;
             border-radius: 40px;
@@ -76,16 +197,16 @@
         }
 
         .global-select-all:hover {
-            background: #3f5f9e;
+            opacity: 0.9;
         }
 
         .section {
             margin-bottom: 35px;
-            background: #101b2b;
+            background: var(--section-bg);
             border-radius: 20px;
             padding: 20px;
-            border: 1px solid #263750;
-            box-shadow: 0 8px 0 #080c14;
+            border: 1px solid var(--section-border);
+            box-shadow: 0 8px 0 var(--shadow);
         }
 
         .section-header {
@@ -99,7 +220,7 @@
         .section-header h2 {
             font-size: 1.6rem;
             font-weight: 600;
-            color: #d6e3ff;
+            color: var(--text-primary);
             letter-spacing: -0.3px;
             display: flex;
             align-items: center;
@@ -107,7 +228,7 @@
         }
 
         .badge-count {
-            background: #2d4370;
+            background: var(--count-badge-bg);
             color: white;
             border-radius: 30px;
             padding: 3px 14px;
@@ -121,7 +242,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #b0c6f0;
+            color: var(--text-secondary);
             font-size: 0.9rem;
             cursor: pointer;
             user-select: none;
@@ -131,7 +252,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: #4f7df3;
+            accent-color: var(--accent-primary);
         }
 
         .link-grid {
@@ -141,21 +262,21 @@
         }
 
         .link-item {
-            background: #162235;
+            background: var(--item-bg);
             border-radius: 14px;
             padding: 12px 18px;
             display: flex;
             align-items: center;
             gap: 15px;
-            border-left: 6px solid #4f7df3;
+            border-left: 6px solid var(--accent-primary);
             transition: all 0.15s ease;
-            border: 1px solid #2f4468;
+            border: 1px solid var(--item-border);
             border-left-width: 6px;
         }
 
         .link-item:hover {
-            background: #1e304b;
-            border-left-color: #a78bfa;
+            background: var(--item-hover-bg);
+            border-left-color: var(--accent-hover);
             transform: translateX(4px);
         }
 
@@ -168,7 +289,7 @@
             width: 20px;
             height: 20px;
             cursor: pointer;
-            accent-color: #4f7df3;
+            accent-color: var(--accent-primary);
             transform: scale(1);
         }
 
@@ -181,9 +302,19 @@
         }
 
         .platform-icon {
-            font-size: 1.5rem;
-            min-width: 32px;
-            text-align: center;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .platform-icon img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: var(--icon-filter);
         }
 
         .link-details {
@@ -192,14 +323,14 @@
 
         .link-title {
             font-weight: 600;
-            color: #f0f4ff;
+            color: var(--text-primary);
             margin-bottom: 4px;
             word-break: break-word;
         }
 
         .link-url {
             font-size: 0.8rem;
-            color: #90a4d0;
+            color: var(--text-secondary);
             word-break: break-all;
         }
 
@@ -210,34 +341,33 @@
         }
 
         .btn {
-            background: #253a5e;
+            background: var(--btn-bg);
             border: none;
-            color: #d4e0ff;
+            color: var(--text-primary);
             padding: 8px 16px;
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
             transition: 0.1s;
-            border: 1px solid #405e88;
+            border: 1px solid var(--btn-border);
             text-decoration: none;
             display: inline-block;
         }
 
         .btn:hover {
-            background: #3a5a8c;
-            color: white;
-            border-color: #6f9ae0;
+            background: var(--btn-hover-bg);
+            border-color: var(--accent-primary);
         }
 
         .btn-primary {
-            background: #3b5b9b;
+            background: var(--accent-primary);
             color: white;
-            border-color: #6a93e0;
+            border-color: var(--accent-primary);
         }
 
         .btn-primary:hover {
-            background: #4f7bc9;
+            opacity: 0.9;
         }
 
         .btn-share {
@@ -246,14 +376,15 @@
             color: #d0f0d0;
         }
 
-        .btn-share:hover {
-            background: #3f6e55;
+        [data-theme="light"] .btn-share {
+            background: #10b981;
+            border-color: #059669;
             color: white;
         }
 
         .notice-tag {
-            background: #6b4e1e;
-            color: #ffdf9c;
+            background: var(--notice-bg);
+            color: var(--notice-text);
             border-radius: 20px;
             padding: 2px 12px;
             font-size: 0.7rem;
@@ -267,14 +398,14 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #0f1a2b;
-            border: 1px solid #3b5780;
+            background: var(--batch-bar-bg);
+            border: 1px solid var(--border-light);
             border-radius: 60px;
             padding: 12px 25px;
             display: none;
             align-items: center;
             gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            box-shadow: 0 10px 30px var(--shadow);
             backdrop-filter: blur(8px);
             z-index: 1000;
         }
@@ -284,9 +415,9 @@
         }
 
         .selected-count {
-            color: white;
+            color: var(--text-primary);
             font-weight: 600;
-            background: #2d4370;
+            background: var(--count-badge-bg);
             padding: 5px 16px;
             border-radius: 40px;
         }
@@ -297,8 +428,8 @@
         }
 
         .batch-btn {
-            background: #2c4b6e;
-            border: 1px solid #5d8ac0;
+            background: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
             color: white;
             padding: 10px 22px;
             border-radius: 40px;
@@ -309,13 +440,18 @@
         }
 
         .batch-btn:hover {
-            background: #3e6a9c;
+            opacity: 0.9;
+        }
+
+        #clearSelectionBtn {
+            background: #4a2e3a;
+            border-color: #8b4e5e;
         }
 
         footer {
             margin-top: 20px;
             text-align: center;
-            color: #7f93b9;
+            color: var(--text-secondary);
             font-size: 0.85rem;
         }
 
@@ -330,6 +466,15 @@
 </head>
 <body>
 <div class="container">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-wrapper">
+        <div class="theme-toggle">
+            <button class="theme-option active" data-theme="dark">🌙 Dark</button>
+            <button class="theme-option" data-theme="amoled">⬛ AMOLED</button>
+            <button class="theme-option" data-theme="light">☀️ Light</button>
+        </div>
+    </div>
+
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
         <h1>🕊️ 78th Nirankari Sant Samagam 2025</h1>
         <button class="global-select-all" id="globalSelectAllBtn">☑ Select All Links</button>
@@ -479,7 +624,23 @@
             { name: "Dailymotion", url: "https://dai.ly/x9yofzm" }
         ];
 
-        // ----- Helper: Render Section with checkboxes -----
+        // Helper to extract domain from URL
+        function getDomain(url) {
+            try {
+                const hostname = new URL(url).hostname;
+                return hostname.replace(/^www\./, '');
+            } catch {
+                return '';
+            }
+        }
+
+        // Get favicon URL using DuckDuckGo service (works well)
+        function getFaviconUrl(domain) {
+            if (!domain) return '';
+            return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+        }
+
+        // Render section with favicons
         function renderSection(containerId, items, showLoginBadge = false) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -488,16 +649,10 @@
                 const div = document.createElement('div');
                 div.className = 'link-item';
                 
-                let icon = '🔗';
-                const n = item.name.toLowerCase();
-                if (n.includes('rumble')||n.includes('vimeo')||n.includes('dailymotion')) icon = '🎬';
-                else if (n.includes('drive')||n.includes('mega')||n.includes('dropbox')||n.includes('cloud')) icon = '☁️';
-                else if (n.includes('download')||n.includes('mediafire')) icon = '⬇️';
-                else icon = '📁';
-
+                const domain = getDomain(item.url);
+                const faviconUrl = getFaviconUrl(domain);
+                
                 const loginTag = showLoginBadge ? '<span class="notice-tag">Login required</span>' : '';
-
-                // Unique ID for checkbox based on URL (simplified)
                 const checkboxId = `chk_${containerId}_${index}`;
                 
                 div.innerHTML = `
@@ -505,7 +660,10 @@
                         <input type="checkbox" class="link-check" id="${checkboxId}" data-url="${item.url}" data-name="${item.name}" data-section="${containerId}">
                     </div>
                     <div class="link-info">
-                        <span class="platform-icon">${icon}</span>
+                        <span class="platform-icon">
+                            <img src="${faviconUrl}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" loading="lazy">
+                            <span style="display:none; font-size:1.2rem;">🔗</span>
+                        </span>
                         <div class="link-details">
                             <div class="link-title">${item.name} ${loginTag}</div>
                             <div class="link-url">${item.url}</div>
@@ -570,7 +728,29 @@
         document.getElementById('download-count').textContent = downloadLinks.length + ' Links';
         document.getElementById('cloud-count').textContent = cloudLoginLinks.length + ' Links';
 
-        // ---------- BATCH SELECTION LOGIC ----------
+        // ---------- THEME SWITCHER ----------
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const htmlElement = document.documentElement;
+        
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+                htmlElement.setAttribute('data-theme', theme);
+                themeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                // Save preference
+                localStorage.setItem('theme', theme);
+            });
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        themeOptions.forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.theme === savedTheme);
+        });
+
+        // ---------- BATCH SELECTION LOGIC (same as before) ----------
         const allCheckboxes = document.querySelectorAll('.link-check');
         const batchBar = document.getElementById('batchBar');
         const selectedCountSpan = document.getElementById('selectedCount');
@@ -580,7 +760,6 @@
         const globalSelectAllBtn = document.getElementById('globalSelectAllBtn');
         const sectionSelectAllCheckboxes = document.querySelectorAll('.section-select-all');
 
-        // Update batch bar visibility and count
         function updateBatchBar() {
             const checked = document.querySelectorAll('.link-check:checked');
             const count = checked.length;
@@ -590,7 +769,6 @@
             } else {
                 batchBar.classList.remove('show');
             }
-            // Update section "select all" checkboxes state
             updateSectionSelectAllState();
         }
 
@@ -615,7 +793,6 @@
                     }
                 }
             });
-            // Update global select all button text (optional)
             const totalCheckboxes = document.querySelectorAll('.link-check').length;
             const totalChecked = document.querySelectorAll('.link-check:checked').length;
             if (totalChecked === totalCheckboxes) {
@@ -625,10 +802,8 @@
             }
         }
 
-        // Event listeners for checkboxes
         allCheckboxes.forEach(cb => cb.addEventListener('change', updateBatchBar));
 
-        // Section select all
         sectionSelectAllCheckboxes.forEach(sectionCheck => {
             sectionCheck.addEventListener('change', function(e) {
                 const section = this.dataset.section;
@@ -648,7 +823,6 @@
             });
         });
 
-        // Global select all
         globalSelectAllBtn.addEventListener('click', function() {
             const allCb = document.querySelectorAll('.link-check');
             const totalChecked = document.querySelectorAll('.link-check:checked').length;
@@ -657,7 +831,6 @@
             updateBatchBar();
         });
 
-        // Clear selection
         clearSelectionBtn.addEventListener('click', function() {
             document.querySelectorAll('.link-check').forEach(cb => cb.checked = false);
             document.querySelectorAll('.section-select-all').forEach(sc => {
@@ -667,7 +840,6 @@
             updateBatchBar();
         });
 
-        // Batch copy
         batchCopyBtn.addEventListener('click', function() {
             const checked = document.querySelectorAll('.link-check:checked');
             if (checked.length === 0) return;
@@ -685,7 +857,6 @@
             }).catch(() => alert('Copy failed'));
         });
 
-        // Batch share
         batchShareBtn.addEventListener('click', async function() {
             const checked = document.querySelectorAll('.link-check:checked');
             if (checked.length === 0) return;
@@ -716,7 +887,6 @@
             }
         });
 
-        // Initialize indeterminate state (some browsers need explicit set)
         updateBatchBar();
     })();
 </script>
