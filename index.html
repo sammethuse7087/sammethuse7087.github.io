@@ -1,88 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>78th Nirankari Samagam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirankari Samagam</title>
 
 <style>
 body {
-    background: #0d0d0d;
-    color: white;
-    font-family: Arial;
-    text-align: center;
-    padding: 15px;
+  margin:0;
+  font-family:Segoe UI;
+  background:#050510;
+  color:white;
 }
-h1 { color: #00ffcc; }
-h2 {
-    margin-top: 30px;
-    color: #ffaa00;
+
+/* HEADER */
+header {
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px);
 }
-a {
-    display: block;
-    margin: 6px;
-    padding: 10px;
-    background: #00ffcc;
-    color: black;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
+
+h1{
+  color:#00fff2;
+  text-shadow:0 0 10px #00fff2;
 }
-a:hover {
-    background: #00ccaa;
+
+/* SEARCH */
+input{
+  padding:8px;
+  border-radius:10px;
+  border:none;
+}
+
+/* PLAYER */
+iframe{
+  width:100%;
+  height:250px;
+  border:none;
+  border-radius:12px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  padding:10px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  box-shadow:0 0 15px #00fff2;
+  transform:scale(1.05);
+}
+
+/* STATUS */
+.live{color:lime;font-size:12px;}
+.dead{color:red;font-size:12px;}
+
+.section{
+  padding:10px;
+}
+
+h2{
+  color:#ff00ff;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  iframe{height:200px;}
 }
 </style>
 
 </head>
+
 <body>
 
-<h1>🔥 78th Nirankari Samagam 🔥</h1>
+<header>
+<h1>🔥 Nirankari</h1>
+<input type="text" id="search" placeholder="Search...">
+</header>
 
-<h2>📺 Streamable</h2>
-<a href="https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html">Rumble</a>
-<a href="https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ">DTube</a>
-<a href="https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/">RuTube</a>
-<a href="https://m.vkvideo.ru/video-235745371_456239017">VK Video</a>
-<a href="https://m.ok.ru/video/12150196210357">OK</a>
-<a href="https://www.brighteon.com/e3d96da0-3f75-44f3-88b8-3d63d3624905">Brighteon</a>
-<a href="https://vimeo.com/1159540263">Vimeo</a>
+<!-- PLAYER -->
+<div style="padding:10px">
+<iframe id="player"></iframe>
+</div>
 
-<h2>💻 Desktop Stream</h2>
-<a href="https://www.nicovideo.jp/watch/sm45887902">NicoVideo</a>
-<a href="https://trovo.live/s/sammethuse/549873486261">Trovo</a>
+<!-- SECTIONS -->
+<div id="content"></div>
 
-<h2>⬇️ Stream Download</h2>
-<a href="https://streamruby.com/m00wtf3n2ypy.html">StreamRuby</a>
-<a href="https://nirankar.seeks.cloud/#lh1sz&dl=1">Seeks</a>
-<a href="https://dri.me/ueoyxEoSZDC1isknqe8f9CZeuLpuY1">Dri</a>
-<a href="https://nirankar.player4me.vip/#d1l6i&dl=1">Player4Me</a>
-<a href="https://sendvid.com/gof5vy7y">SendVid</a>
-<a href="https://archive.org/details/78th-nirankari-samagum-2025">Archive</a>
-<a href="https://video.liberta.vip/w/aNWtMJhev3jnY42joL2v3Q">Liberta</a>
-<a href="https://krakenfiles.com/view/JzQoPeA9lK/file.html">KrakenFiles</a>
+<script>
 
-<h2>☁️ Cloud Links</h2>
-<a href="https://drive.google.com/drive/folders/1LpTCyfWD0fDWyyDYwaLy1miNrx729cId">Google Drive</a>
-<a href="https://mega.nz/folder/8J0EGA7D#HnbExrjHDFxwunroXiYjgw">Mega 1</a>
-<a href="https://mega.nz/folder/zcMiAIqb#Wsz9dd23FsjIGu8C6rRolQ">Mega 2</a>
-<a href="https://www.dropbox.com/scl/fo/vn1i55e06gyl9cq8ac48m">Dropbox</a>
-<a href="https://icedrive.net/s/7zgXgRRz5jTkTVVk2ukNw6WxbVZt">IceDrive</a>
-<a href="https://1drv.ms/f/c/71c3dc4635d9120e">OneDrive</a>
+/* DATA FROM YOUR FILE */
+const data = {
+"Stream Only":[
+"https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html",
+"https://d.tube/watch/JQcxsWnJRxKhT7Y32CUDiJ",
+"https://rutube.ru/video/1ff6e81b493f43252f14f66584d51e04/",
+"https://m.vkvideo.ru/video-235745371_456239017",
+"https://vimeo.com/1159540263"
+],
 
-<h2>🔐 Login Required</h2>
-<a href="https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw">Terabox 1</a>
-<a href="https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2">PikPak</a>
-<a href="https://www.4shared.com/folder/ldxhi-wS">4Shared</a>
+"Stream & Download":[
+"https://streamruby.com/m00wtf3n2ypy.html",
+"https://archive.org/details/78th-nirankari-samagum-2025",
+"https://krakenfiles.com/view/JzQoPeA9lK/file.html"
+],
 
-<h2>📥 Downloadable</h2>
-<a href="https://www.mediafire.com/folder/ffz29cwk5cdzx">MediaFire</a>
-<a href="https://filemoon.org/LJlGn9bZz15w/file">FileMoon</a>
-<a href="https://bestfile.io/en/2qzP33JsNLhGfTM/file">BestFile 1</a>
-<a href="https://bestfile.io/en/a8LrSnKoqcs32zh/file">BestFile 2</a>
+"Download":[
+"https://mediafire.com",
+"https://filemoon.org",
+"https://bestfile.io"
+],
 
-<h2>🔑 Login Required Stream</h2>
-<a href="https://www.febbox.com/share/uQzP3dJx">FebBox 1</a>
-<a href="https://www.febbox.com/share/rAZTXkYU">FebBox 2</a>
-<a href="https://www.febbox.com/share/fUURuOv1">FebBox 3</a>
+"Login Required":[
+"https://1024terabox.com",
+"https://mypikpak.com",
+"https://4shared.com"
+]
+};
+
+/* RENDER */
+let html="";
+for(let key in data){
+html+=`<div class="section">
+<h2>${key} (${data[key].length})</h2>
+<div class="grid">`;
+
+data[key].forEach(link=>{
+html+=`<div class="card" onclick="play('${link}')">
+${new URL(link).hostname}
+<div class="status">checking...</div>
+</div>`;
+});
+
+html+=`</div></div>`;
+}
+
+document.getElementById("content").innerHTML=html;
+
+/* PLAYER */
+function play(url){
+document.getElementById("player").src=url;
+}
+
+/* SEARCH */
+document.getElementById("search").onkeyup=function(){
+let val=this.value.toLowerCase();
+document.querySelectorAll(".card").forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(val)?"block":"none";
+});
+};
+
+/* AUTO CHECK */
+document.querySelectorAll(".card").forEach(card=>{
+fetch(card.innerText,{mode:"no-cors"})
+.then(()=>card.querySelector(".status").innerHTML="<span class='live'>● Live</span>")
+.catch(()=>card.querySelector(".status").innerHTML="<span class='dead'>● Dead</span>");
+});
+
+</script>
 
 </body>
 </html>
