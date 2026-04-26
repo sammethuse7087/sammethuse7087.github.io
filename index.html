@@ -32,6 +32,9 @@
             --icon-filter: none;
             --menu-bg: #1e2b47;
             --menu-border: #3b5780;
+            --search-bg: #1a2538;
+            --visited-glow: rgba(167, 139, 250, 0.3);
+            --toast-bg: #1e2b47;
         }
 
         [data-theme="amoled"] {
@@ -59,6 +62,9 @@
             --shadow: rgba(255,255,255,0.05);
             --menu-bg: #121212;
             --menu-border: #3a3a3a;
+            --search-bg: #0a0a0a;
+            --visited-glow: rgba(167, 139, 250, 0.4);
+            --toast-bg: #121212;
         }
 
         [data-theme="light"] {
@@ -86,6 +92,9 @@
             --shadow: rgba(0,0,0,0.1);
             --menu-bg: #ffffff;
             --menu-border: #cbd5e1;
+            --search-bg: #f1f5f9;
+            --visited-glow: rgba(139, 92, 246, 0.15);
+            --toast-bg: #ffffff;
         }
 
         * {
@@ -118,8 +127,36 @@
 
         .theme-toggle-wrapper {
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            max-width: 350px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 1px solid var(--border-light);
+            background: var(--search-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-secondary);
         }
 
         .theme-toggle {
@@ -275,6 +312,15 @@
             position: relative;
         }
 
+        .link-item.visited {
+            box-shadow: 0 0 0 2px var(--visited-glow), inset 0 0 0 1px var(--accent-hover);
+            border-left-color: var(--accent-hover);
+        }
+
+        .link-item.hidden {
+            display: none;
+        }
+
         .link-item:hover {
             background: var(--item-hover-bg);
             border-left-color: var(--accent-hover);
@@ -353,7 +399,7 @@
             margin-left: auto;
         }
 
-        .click-counter {
+        .click-counter, .share-counter {
             display: flex;
             align-items: center;
             gap: 4px;
@@ -443,6 +489,13 @@
             font-weight: 500;
         }
 
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
         /* Batch bar */
         .batch-bar {
             position: fixed;
@@ -491,7 +544,7 @@
             padding: 8px 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 2000;
-            min-width: 180px;
+            min-width: 250px;
             backdrop-filter: blur(8px);
             display: none;
         }
@@ -499,7 +552,7 @@
         .context-menu.show { display: block; }
 
         .context-menu-item {
-            padding: 12px 20px;
+            padding: 14px 20px;
             color: var(--text-primary);
             font-size: 1rem;
             cursor: pointer;
@@ -507,11 +560,37 @@
             align-items: center;
             gap: 12px;
             transition: background 0.1s;
+            user-select: none;
         }
 
         .context-menu-item:hover {
             background: var(--accent-primary);
             color: white;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--toast-bg);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 3000;
+            font-size: 0.9rem;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
         }
 
         footer {
@@ -533,12 +612,18 @@
             .actions { margin-left: auto; }
             .batch-bar { width: 95%; padding: 12px 15px; flex-wrap: wrap; justify-content: center; }
             .btn { padding: 12px 16px; font-size: 0.9rem; }
+            .theme-toggle-wrapper { flex-direction: column; align-items: stretch; }
+            .search-wrapper { max-width: 100%; }
+            .toast { white-space: normal; max-width: 90%; text-align: center; }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="theme-toggle-wrapper">
+        <div class="search-wrapper">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search by name or URL..." autocomplete="off">
+        </div>
         <div class="theme-toggle">
             <button class="theme-option active" data-theme="dark">🌙 Dark</button>
             <button class="theme-option" data-theme="amoled">⬛ AMOLED</button>
@@ -552,13 +637,13 @@
     </div>
     <div class="subhead">
         <span>All video and download links in one place</span>
-        <span class="total-badge">📎 Total 66 Links</span>
+        <span class="total-badge" id="totalLinksBadge">📎 Total 67 Links</span>
     </div>
 
     <div id="sections-container"></div>
 
     <footer>
-        ⚡ Click any tile to open • Long-press/Right-click for menu • Status dots auto-update
+        ⚡ Click tile/Open = New Tab • Right‑click / Long‑press for more options • 🟢 Live status • 👁️ Views • 📤 Shares • 🔗 Short Link
     </footer>
 </div>
 
@@ -575,13 +660,25 @@
 <!-- Context Menu -->
 <div class="context-menu" id="contextMenu">
     <div class="context-menu-item" data-action="open">🔗 Open in New Tab</div>
+    <div class="context-menu-item" data-action="incognito">🕶️ Copy for Incognito</div>
+    <div class="context-menu-item" data-action="shortlink">🔗 Share Short Link</div>
     <div class="context-menu-item" data-action="copy">📋 Copy Link</div>
     <div class="context-menu-item" data-action="share">📤 Share Link</div>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
     (function(){
         'use strict';
+
+        // ========== CONFIGURATION ==========
+        const NAMESPACE_VIEWS = 'nirankari-views-2025';
+        const NAMESPACE_SHARES = 'nirankari-shares-2025';
+        const BASE_URL = 'https://api.counterapi.dev/v1';
+        const SHORTENER_API = 'https://is.gd/create.php?format=simple&url=';
+        // =================================
 
         // ---------- DATA ----------
         const sections = [
@@ -650,7 +747,8 @@
                 { name: "BestFile 2", url: "https://bestfile.io/en/a8LrSnKoqcs32zh/file" },
                 { name: "Febbox 1", url: "https://www.febbox.com/share/uQzP3dJx" },
                 { name: "Febbox 2", url: "https://www.febbox.com/share/rAZTXkYU" },
-                { name: "Febbox 3", url: "https://www.febbox.com/share/fUURuOv1" }
+                { name: "Febbox 3", url: "https://www.febbox.com/share/fUURuOv1" },
+                { name: "Blomp", url: "https://sharedby.blomp.com/u5E0PD" }
             ]},
             { title: '☁️ Cloud Login', id: 'cloud', links: [
                 { name: "TeraBox 1", url: "https://1024terabox.com/s/1SSb9KoDya6s7eEwf15V-Sw?op_source=goldsharelink" },
@@ -661,12 +759,85 @@
             ]}
         ];
 
-        // Global state
         let currentContextLink = null;
         let serialCounter = 1;
-        const clickCounts = JSON.parse(localStorage.getItem('linkClickCounts')) || {};
+        const visitedUrls = JSON.parse(localStorage.getItem('visitedUrls')) || {};
+        const allLinksFlat = [];
+        const localCounts = JSON.parse(localStorage.getItem('fallbackCounts')) || {};
+        const localShares = JSON.parse(localStorage.getItem('fallbackShares')) || {};
 
-        // Helper functions
+        const toast = document.getElementById('toast');
+        function showToast(message, duration = 3000) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), duration);
+        }
+
+        function getKeyFromUrl(url) {
+            let hash = 0;
+            for (let i = 0; i < url.length; i++) {
+                hash = ((hash << 5) - hash) + url.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash).toString(36);
+        }
+
+        // Cloud Getters/Setters for Views and Shares
+        async function getCloudCount(url, type = 'views') {
+            const namespace = type === 'views' ? NAMESPACE_VIEWS : NAMESPACE_SHARES;
+            const key = getKeyFromUrl(url);
+            try {
+                const response = await fetch(`${BASE_URL}/${namespace}/${key}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                const count = (data && typeof data.count === 'number') ? data.count : 0;
+                if (type === 'views') { localCounts[url] = count; localStorage.setItem('fallbackCounts', JSON.stringify(localCounts)); }
+                else { localShares[url] = count; localStorage.setItem('fallbackShares', JSON.stringify(localShares)); }
+                return count;
+            } catch (error) {
+                console.warn(`Cloud ${type} fetch failed, using fallback`);
+                return type === 'views' ? (localCounts[url] || 0) : (localShares[url] || 0);
+            }
+        }
+
+        async function incrementCloudCount(url, type = 'views') {
+            const namespace = type === 'views' ? NAMESPACE_VIEWS : NAMESPACE_SHARES;
+            const key = getKeyFromUrl(url);
+            try {
+                const response = await fetch(`${BASE_URL}/${namespace}/${key}/up`, { method: 'POST' });
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                const count = (data && typeof data.count === 'number') ? data.count : (type === 'views' ? (localCounts[url] || 0) + 1 : (localShares[url] || 0) + 1);
+                if (type === 'views') { localCounts[url] = count; localStorage.setItem('fallbackCounts', JSON.stringify(localCounts)); }
+                else { localShares[url] = count; localStorage.setItem('fallbackShares', JSON.stringify(localShares)); }
+                return count;
+            } catch (error) {
+                console.warn(`Cloud ${type} increment failed, using local`);
+                const fallback = type === 'views' ? localCounts : localShares;
+                const newCount = (fallback[url] || 0) + 1;
+                fallback[url] = newCount;
+                localStorage.setItem(type === 'views' ? 'fallbackCounts' : 'fallbackShares', JSON.stringify(fallback));
+                return newCount;
+            }
+        }
+
+        // Status Checker
+        async function checkLinkStatus(url, dotElement) {
+            dotElement.classList.add('checking');
+            dotElement.classList.remove('live', 'dead');
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                await fetch(url, { mode: 'no-cors', signal: controller.signal });
+                clearTimeout(timeoutId);
+                dotElement.classList.add('live');
+            } catch {
+                dotElement.classList.add('dead');
+            } finally {
+                dotElement.classList.remove('checking');
+            }
+        }
+
         function getDomain(url) {
             try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
         }
@@ -675,21 +846,73 @@
             return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : '';
         }
 
-        function incrementClick(url) {
-            clickCounts[url] = (clickCounts[url] || 0) + 1;
-            localStorage.setItem('linkClickCounts', JSON.stringify(clickCounts));
-            return clickCounts[url];
+        function markVisited(url, element) {
+            visitedUrls[url] = true;
+            localStorage.setItem('visitedUrls', JSON.stringify(visitedUrls));
+            element.classList.add('visited');
         }
 
-        function openLink(url) {
-            incrementClick(url);
+        async function openLinkNormal(url, element) {
+            const newCount = await incrementCloudCount(url, 'views');
+            if (element) markVisited(url, element);
+            const counterSpan = element ? element.querySelector(`.click-count`) : document.querySelector(`.click-count[data-url="${url}"]`);
+            if (counterSpan) counterSpan.textContent = newCount;
             window.open(url, '_blank');
-            // Update display for that link's counter
-            const counterSpan = document.querySelector(`.click-count[data-url="${url}"]`);
-            if (counterSpan) counterSpan.textContent = clickCounts[url] || 0;
         }
 
-        // Render all sections
+        async function shareLink(url, element) {
+            const newShareCount = await incrementCloudCount(url, 'shares');
+            const shareSpan = element ? element.querySelector(`.share-count`) : document.querySelector(`.share-count[data-url="${url}"]`);
+            if (shareSpan) shareSpan.textContent = newShareCount;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: element?.dataset.name || 'Link', url });
+                } catch (err) {
+                    if (err.name !== 'AbortError') fallbackCopy(url);
+                }
+            } else {
+                fallbackCopy(url);
+            }
+        }
+
+        function fallbackCopy(url) {
+            navigator.clipboard.writeText(url).then(() => showToast('📋 Link copied (share not supported)', 1500));
+        }
+
+        function openLinkIncognito(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('🕶️ Link copied! Open incognito window (Ctrl+Shift+N) and paste to visit.', 5000);
+            }).catch(() => {
+                prompt('Copy this link manually for incognito:', url);
+            });
+        }
+
+        async function generateShortLink(longUrl) {
+            try {
+                const response = await fetch(SHORTENER_API + encodeURIComponent(longUrl));
+                if (!response.ok) throw new Error('Failed to shorten URL');
+                const shortUrl = await response.text();
+                return shortUrl.trim();
+            } catch (error) {
+                console.error('Error generating short link:', error);
+                throw error;
+            }
+        }
+
+        async function handleShortLink(url) {
+            showToast('⏳ Generating short link...', 1000);
+            try {
+                const shortUrl = await generateShortLink(url);
+                await navigator.clipboard.writeText(shortUrl);
+                showToast(`✅ Short link copied! ${shortUrl}`, 3000);
+            } catch (error) {
+                showToast('❌ Failed to generate short link. Using original.', 2000);
+                fallbackCopy(url);
+            }
+        }
+
+        // Render
         const container = document.getElementById('sections-container');
         container.innerHTML = '';
         sections.forEach(section => {
@@ -698,7 +921,7 @@
             sectionDiv.dataset.category = section.id;
             sectionDiv.innerHTML = `
                 <div class="section-header">
-                    <h2>${section.title} <span class="badge-count">${section.links.length} Links</span></h2>
+                    <h2>${section.title} <span class="badge-count" data-section-count="${section.id}">${section.links.length} Links</span></h2>
                     <label class="select-all-section">
                         <input type="checkbox" class="section-select-all" data-section="${section.id}"> Select All
                     </label>
@@ -708,17 +931,20 @@
             container.appendChild(sectionDiv);
 
             const grid = document.getElementById(`${section.id}-links`);
-            section.links.forEach((link, idx) => {
+            section.links.forEach((link) => {
                 const domain = getDomain(link.url);
                 const faviconUrl = getFaviconUrl(domain);
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'link-item';
+                if (visitedUrls[link.url]) itemDiv.classList.add('visited');
                 itemDiv.dataset.url = link.url;
                 itemDiv.dataset.name = link.name;
+                itemDiv.dataset.section = section.id;
                 
                 const serial = serialCounter++;
-                const clickCount = clickCounts[link.url] || 0;
                 const loginBadge = section.id === 'cloud' ? '<span class="notice-tag">Login required</span>' : '';
+                const initialViews = localCounts[link.url] || 0;
+                const initialShares = localShares[link.url] || 0;
 
                 itemDiv.innerHTML = `
                     <div class="link-checkbox">
@@ -742,7 +968,11 @@
                         </div>
                         <div class="click-counter">
                             <span>👁️</span>
-                            <span class="click-count" data-url="${link.url}">${clickCount}</span>
+                            <span class="click-count" data-url="${link.url}">${initialViews}</span>
+                        </div>
+                        <div class="share-counter">
+                            <span>📤</span>
+                            <span class="share-count" data-url="${link.url}">${initialShares}</span>
                         </div>
                     </div>
                     <div class="actions">
@@ -752,128 +982,151 @@
                     </div>
                 `;
                 grid.appendChild(itemDiv);
+                allLinksFlat.push({ element: itemDiv, name: link.name, url: link.url, section: section.id });
             });
         });
 
-        // Now attach event listeners
-        const allLinkItems = document.querySelectorAll('.link-item');
+        document.getElementById('totalLinksBadge').textContent = `📎 Total ${allLinksFlat.length} Links`;
+
+        // Load all counts from cloud
+        async function loadAllCloudCounts() {
+            for (const item of allLinksFlat) {
+                const url = item.url;
+                const views = await getCloudCount(url, 'views');
+                const shares = await getCloudCount(url, 'shares');
+                item.element.querySelector('.click-count').textContent = views;
+                item.element.querySelector('.share-count').textContent = shares;
+                
+                const dot = item.element.querySelector('.status-dot');
+                checkLinkStatus(url, dot);
+            }
+        }
+        window.addEventListener('load', loadAllCloudCounts);
+
+        // Search
+        const searchInput = document.getElementById('searchInput');
+        function filterLinks() {
+            const query = searchInput.value.trim().toLowerCase();
+            allLinksFlat.forEach(item => {
+                const matches = query === '' || item.name.toLowerCase().includes(query) || item.url.toLowerCase().includes(query);
+                item.element.classList.toggle('hidden', !matches);
+            });
+            sections.forEach(section => {
+                const visible = allLinksFlat.filter(l => l.section === section.id && !l.element.classList.contains('hidden')).length;
+                const badge = document.querySelector(`[data-section-count="${section.id}"]`);
+                if (badge) badge.textContent = `${visible} / ${section.links.length} Links`;
+                const grid = document.getElementById(`${section.id}-links`);
+                const existingMsg = grid.querySelector('.no-results');
+                if (visible === 0 && query !== '') {
+                    if (!existingMsg) {
+                        const msg = document.createElement('div');
+                        msg.className = 'no-results';
+                        msg.textContent = '😕 No matching links';
+                        grid.appendChild(msg);
+                    }
+                } else {
+                    if (existingMsg) existingMsg.remove();
+                }
+            });
+            updateBatchUI();
+        }
+        searchInput.addEventListener('input', filterLinks);
+
+        // Context Menu
         const contextMenu = document.getElementById('contextMenu');
         let longPressTimer;
-        
-        // Context menu actions
-        contextMenu.addEventListener('click', (e) => {
+        contextMenu.addEventListener('click', async (e) => {
             const action = e.target.closest('[data-action]')?.dataset.action;
             if (!action || !currentContextLink) return;
             const url = currentContextLink.dataset.url;
-            if (action === 'open') openLink(url);
-            else if (action === 'copy') {
-                navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+            
+            if (action === 'open') {
+                openLinkNormal(url, currentContextLink);
+            } else if (action === 'incognito') {
+                openLinkIncognito(url);
+            } else if (action === 'copy') {
+                navigator.clipboard.writeText(url).then(() => showToast('📋 Link copied', 1500));
             } else if (action === 'share') {
-                if (navigator.share) {
-                    navigator.share({ title: currentContextLink.dataset.name, url });
-                } else {
-                    navigator.clipboard.writeText(url).then(() => alert('Link copied (share not supported)'));
-                }
+                await shareLink(url, currentContextLink);
+            } else if (action === 'shortlink') {
+                await handleShortLink(url);
             }
             contextMenu.classList.remove('show');
         });
 
-        // Hide context menu on outside click
         document.addEventListener('click', () => contextMenu.classList.remove('show'));
         document.addEventListener('contextmenu', (e) => {
             if (!e.target.closest('.link-item')) contextMenu.classList.remove('show');
         });
 
-        // Link item interactions
-        allLinkItems.forEach(item => {
+        document.addEventListener('touchstart', (e) => {
+            const item = e.target.closest('.link-item');
+            if (!item) return;
+            if (e.target.closest('button, a, input')) return;
+            longPressTimer = setTimeout(() => {
+                currentContextLink = item;
+                const touch = e.touches[0];
+                contextMenu.style.left = touch.clientX + 'px';
+                contextMenu.style.top = touch.clientY + 'px';
+                contextMenu.classList.add('show');
+            }, 500);
+        }, { passive: true });
+        document.addEventListener('touchend', () => clearTimeout(longPressTimer));
+        document.addEventListener('touchmove', () => clearTimeout(longPressTimer));
+
+        document.addEventListener('contextmenu', (e) => {
+            const item = e.target.closest('.link-item');
+            if (!item) return;
+            e.preventDefault();
+            currentContextLink = item;
+            contextMenu.style.left = e.clientX + 'px';
+            contextMenu.style.top = e.clientY + 'px';
+            contextMenu.classList.add('show');
+        });
+
+        // Click & Button handlers
+        document.addEventListener('click', (e) => {
+            const item = e.target.closest('.link-item');
+            if (!item) return;
+            if (e.target.closest('button, a, input, .status-dot, .recheck-btn')) return;
+            openLinkNormal(item.dataset.url, item);
+        });
+
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('.open-btn, .copy-btn, .share-btn');
+            if (!btn) return;
+            e.stopPropagation();
+            const item = btn.closest('.link-item');
             const url = item.dataset.url;
             
-            // Tile click to open (avoid if clicking on buttons/checkbox)
-            item.addEventListener('click', (e) => {
-                if (e.target.closest('button, a, input, .status-dot, .recheck-btn')) return;
-                openLink(url);
-            });
-
-            // Long press for mobile
-            item.addEventListener('touchstart', (e) => {
-                if (e.target.closest('button, a, input')) return;
-                longPressTimer = setTimeout(() => {
-                    currentContextLink = item;
-                    const touch = e.touches[0];
-                    contextMenu.style.left = touch.clientX + 'px';
-                    contextMenu.style.top = touch.clientY + 'px';
-                    contextMenu.classList.add('show');
-                }, 500);
-            });
-            item.addEventListener('touchend', () => clearTimeout(longPressTimer));
-            item.addEventListener('touchmove', () => clearTimeout(longPressTimer));
-
-            // Right-click
-            item.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                currentContextLink = item;
-                contextMenu.style.left = e.clientX + 'px';
-                contextMenu.style.top = e.clientY + 'px';
-                contextMenu.classList.add('show');
-            });
-
-            // Buttons
-            item.querySelector('.open-btn').addEventListener('click', (e) => { e.stopPropagation(); openLink(url); });
-            item.querySelector('.copy-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
+            if (btn.classList.contains('open-btn')) {
+                openLinkNormal(url, item);
+            } else if (btn.classList.contains('copy-btn')) {
                 navigator.clipboard.writeText(url).then(() => {
-                    const btn = e.target;
                     btn.textContent = '✓';
                     setTimeout(() => btn.textContent = 'Copy', 1000);
+                    showToast('📋 Link copied', 1000);
                 });
-            });
-            item.querySelector('.share-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (navigator.share) {
-                    navigator.share({ title: item.dataset.name, url });
-                } else {
-                    navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
-                }
-            });
-        });
-
-        // Status checker
-        async function checkLinkStatus(url, dotElement) {
-            dotElement.classList.add('checking');
-            dotElement.classList.remove('live', 'dead');
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                // Try to fetch with no-cors to see if reachable
-                await fetch(url, { mode: 'no-cors', signal: controller.signal });
-                clearTimeout(timeoutId);
-                dotElement.classList.add('live');
-            } catch {
-                dotElement.classList.add('dead');
-            } finally {
-                dotElement.classList.remove('checking');
+            } else if (btn.classList.contains('share-btn')) {
+                await shareLink(url, item);
             }
-        }
-
-        document.querySelectorAll('.status-dot').forEach(dot => {
-            const url = dot.dataset.url;
-            checkLinkStatus(url, dot);
-            dot.addEventListener('click', (e) => {
-                e.stopPropagation();
-                checkLinkStatus(url, dot);
-            });
         });
 
-        document.querySelectorAll('.recheck-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        // Status re-check
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('status-dot')) {
                 e.stopPropagation();
-                const url = btn.dataset.url;
-                const dot = btn.parentElement.querySelector('.status-dot');
+                checkLinkStatus(e.target.dataset.url, e.target);
+            }
+            if (e.target.classList.contains('recheck-btn')) {
+                e.stopPropagation();
+                const url = e.target.dataset.url;
+                const dot = e.target.parentElement.querySelector('.status-dot');
                 checkLinkStatus(url, dot);
-            });
+            }
         });
 
-        // Theme switcher
+        // Theme
         const themeOptions = document.querySelectorAll('.theme-option');
         const html = document.documentElement;
         themeOptions.forEach(opt => {
@@ -889,25 +1142,25 @@
         html.setAttribute('data-theme', savedTheme);
         themeOptions.forEach(o => o.classList.toggle('active', o.dataset.theme === savedTheme));
 
-        // Batch selection logic (same as before but adapted)
+        // Batch selection
         const batchBar = document.getElementById('batchBar');
         const selectedCountSpan = document.getElementById('selectedCount');
-        const allChecks = document.querySelectorAll('.link-check');
-        const sectionSelects = document.querySelectorAll('.section-select-all');
         const globalSelectBtn = document.getElementById('globalSelectAllBtn');
 
         function updateBatchUI() {
-            const checked = document.querySelectorAll('.link-check:checked');
-            const count = checked.length;
-            batchBar.classList.toggle('show', count > 0);
-            selectedCountSpan.textContent = `${count} selected`;
+            const visibleChecks = Array.from(document.querySelectorAll('.link-check')).filter(cb => !cb.closest('.link-item').classList.contains('hidden'));
+            const checked = visibleChecks.filter(cb => cb.checked);
+            batchBar.classList.toggle('show', checked.length > 0);
+            selectedCountSpan.textContent = `${checked.length} selected`;
             
-            sectionSelects.forEach(select => {
+            document.querySelectorAll('.section-select-all').forEach(select => {
                 const sectionId = select.dataset.section;
-                const checks = document.querySelectorAll(`#${sectionId}-links .link-check`);
-                const checkedInSection = document.querySelectorAll(`#${sectionId}-links .link-check:checked`);
-                if (checks.length === 0) return;
-                if (checkedInSection.length === checks.length) {
+                const checks = Array.from(document.querySelectorAll(`#${sectionId}-links .link-check`)).filter(cb => !cb.closest('.link-item').classList.contains('hidden'));
+                const checkedInSection = checks.filter(cb => cb.checked);
+                if (checks.length === 0) {
+                    select.checked = false;
+                    select.indeterminate = false;
+                } else if (checkedInSection.length === checks.length) {
                     select.checked = true;
                     select.indeterminate = false;
                 } else if (checkedInSection.length > 0) {
@@ -919,53 +1172,56 @@
                 }
             });
             
-            const total = allChecks.length;
+            const totalVisible = visibleChecks.length;
             const totalChecked = checked.length;
-            globalSelectBtn.textContent = totalChecked === total ? '☒ Deselect All' : '☑ Select All Links';
+            globalSelectBtn.textContent = (totalChecked === totalVisible && totalVisible > 0) ? '☒ Deselect All' : '☑ Select All Visible';
         }
 
-        allChecks.forEach(cb => cb.addEventListener('change', updateBatchUI));
-        
-        sectionSelects.forEach(select => {
-            select.addEventListener('change', function() {
-                const sectionId = this.dataset.section;
-                const checks = document.querySelectorAll(`#${sectionId}-links .link-check`);
-                checks.forEach(cb => cb.checked = this.checked);
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('link-check') || e.target.classList.contains('section-select-all')) {
+                if (e.target.classList.contains('section-select-all')) {
+                    const sectionId = e.target.dataset.section;
+                    document.querySelectorAll(`#${sectionId}-links .link-check`).forEach(cb => {
+                        if (!cb.closest('.link-item').classList.contains('hidden')) cb.checked = e.target.checked;
+                    });
+                }
                 updateBatchUI();
-            });
+            }
         });
 
         globalSelectBtn.addEventListener('click', () => {
-            const shouldCheck = !(document.querySelectorAll('.link-check:checked').length === allChecks.length);
-            allChecks.forEach(cb => cb.checked = shouldCheck);
+            const visibleChecks = Array.from(document.querySelectorAll('.link-check')).filter(cb => !cb.closest('.link-item').classList.contains('hidden'));
+            const allChecked = visibleChecks.every(cb => cb.checked);
+            visibleChecks.forEach(cb => cb.checked = !allChecked);
             updateBatchUI();
         });
 
         document.getElementById('clearSelectionBtn').addEventListener('click', () => {
-            allChecks.forEach(cb => cb.checked = false);
+            document.querySelectorAll('.link-check').forEach(cb => cb.checked = false);
             updateBatchUI();
         });
 
         document.getElementById('batchCopyBtn').addEventListener('click', () => {
-            const checked = document.querySelectorAll('.link-check:checked');
+            const checked = Array.from(document.querySelectorAll('.link-check:checked')).filter(cb => !cb.closest('.link-item').classList.contains('hidden'));
             if (!checked.length) return;
             let text = '';
             checked.forEach(cb => text += `${cb.dataset.name} - ${cb.dataset.url}\n`);
-            navigator.clipboard.writeText(text).then(() => alert('Copied selected links!'));
+            navigator.clipboard.writeText(text).then(() => showToast(`📋 Copied ${checked.length} links`, 1500));
         });
 
-        document.getElementById('batchShareBtn').addEventListener('click', () => {
-            const checked = document.querySelectorAll('.link-check:checked');
+        document.getElementById('batchShareBtn').addEventListener('click', async () => {
+            const checked = Array.from(document.querySelectorAll('.link-check:checked')).filter(cb => !cb.closest('.link-item').classList.contains('hidden'));
             if (!checked.length) return;
             let text = '';
             checked.forEach(cb => text += `${cb.dataset.name}: ${cb.dataset.url}\n`);
             if (navigator.share) {
-                navigator.share({ title: 'Selected Links', text });
+                await navigator.share({ title: 'Selected Links', text });
             } else {
-                navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'));
+                navigator.clipboard.writeText(text).then(() => showToast('📋 Copied to clipboard!', 1500));
             }
         });
 
+        filterLinks();
         updateBatchUI();
     })();
 </script>
