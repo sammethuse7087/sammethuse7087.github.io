@@ -11,10 +11,6 @@
             font-family: 'Outfit', sans-serif;
             background-color: #0b0f19;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -50,30 +46,12 @@
         .light-theme .bg-gray-800 { background: #e5e7eb !important; border-color: #d1d5db !important; }
         .light-theme .bg-gray-950 { background: #f9fafb !important; border-color: #e5e7eb !important; }
         .light-theme .hover\:bg-white\/5:hover { background: rgba(0,0,0,0.05) !important; }
-        .context-menu {
-            position: fixed;
-            background: #1e293b;
-            border: 1px solid #475569;
-            border-radius: 12px;
-            padding: 6px 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            z-index: 9999;
-            min-width: 180px;
-            backdrop-filter: blur(12px);
-            display: none;
+        .url-text {
+            word-break: break-all;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            user-select: text;  /* allow text selection */
         }
-        .context-menu.show { display: block; }
-        .context-menu-item {
-            padding: 10px 16px;
-            color: #e2e8f0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s;
-        }
-        .context-menu-item:hover { background: #4f46e5; color: white; }
         .toast {
             position: fixed;
             bottom: 80px;
@@ -93,18 +71,6 @@
             white-space: nowrap;
         }
         .toast.show { opacity: 1; }
-        .status-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #666;
-            margin-right: 4px;
-        }
-        .status-dot.live { background: #10b981; box-shadow: 0 0 6px #10b98180; }
-        .status-dot.dead { background: #ef4444; box-shadow: 0 0 6px #ef444480; }
-        .status-dot.checking { background: #f59e0b; animation: pulse 1s infinite; }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body class="p-4 md:p-8 transition-colors duration-300">
@@ -147,29 +113,9 @@
             <a href="#cloud" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 text-gray-400 transition">
                 <span>☁️</span> Cloud Login <span class="ml-auto text-xs opacity-80">5</span>
             </a>
-            <div class="pt-4 border-t border-gray-800 mt-4">
-                <button id="globalSelectAllBtn" class="w-full py-2 px-3 text-sm bg-indigo-600 hover:bg-indigo-700 rounded text-white transition">☑ Select All Links</button>
-            </div>
         </aside>
 
         <main class="lg:col-span-3 space-y-8" id="sectionsContainer"></main>
-    </div>
-
-    <!-- Batch bar (visible when items selected) -->
-    <div id="batchBar" class="fixed bottom-0 left-0 right-0 bg-gray-950 border-t border-gray-800 p-3 flex justify-center gap-4 z-50 hidden">
-        <span id="selectedCount" class="text-sm text-gray-300 py-2">0 selected</span>
-        <button id="batchCopyBtn" class="px-4 py-2 bg-indigo-600 rounded text-white text-sm">📋 Copy Selected</button>
-        <button id="batchShareBtn" class="px-4 py-2 bg-pink-600 rounded text-white text-sm">📤 Share Selected</button>
-        <button id="clearSelectionBtn" class="px-4 py-2 bg-gray-700 rounded text-white text-sm">Clear</button>
-    </div>
-
-    <!-- Context menu for long press / right click -->
-    <div id="contextMenu" class="context-menu">
-        <div class="context-menu-item" data-action="open">🔗 Open in New Tab</div>
-        <div class="context-menu-item" data-action="incognito">🕶️ Copy for Incognito</div>
-        <div class="context-menu-item" data-action="shortlink">🔗 Share Short Link</div>
-        <div class="context-menu-item" data-action="copy">📋 Copy Link</div>
-        <div class="context-menu-item" data-action="share">📤 Share Link</div>
     </div>
 
     <!-- Toast -->
@@ -183,7 +129,6 @@
             const NAMESPACE_VIEWS = 'nirankari-views-2025';
             const NAMESPACE_SHARES = 'nirankari-shares-2025';
             const BASE_URL = 'https://api.counterapi.dev/v1';
-            const SHORTENER_API = 'https://is.gd/create.php?format=simple&url=';
             // ===========================================================
 
             // ------------------ DATA: All 73 links ----------------------
@@ -272,99 +217,13 @@
             ];
 
             // ---------------- Global State ----------------
-            let currentContextLink = null;
             let serialCounter = 1;
-            const visitedUrls = JSON.parse(localStorage.getItem('visitedUrls')) || {};
             const allFlatLinks = [];
-            const localCounts = JSON.parse(localStorage.getItem('fallbackCounts')) || {};
-            const localShares = JSON.parse(localStorage.getItem('fallbackShares')) || {};
-
-            // ----------- Helpers -----------
             const toastEl = document.getElementById('toast');
             function showToast(msg, dur=3000) {
                 toastEl.textContent = msg;
                 toastEl.classList.add('show');
                 setTimeout(() => toastEl.classList.remove('show'), dur);
-            }
-
-            function keyFromUrl(url) {
-                let h=0; for(let i=0;i<url.length;i++) h=((h<<5)-h)+url.charCodeAt(i)|0;
-                return Math.abs(h).toString(36);
-            }
-
-            async function getCloudCount(url, type='views') {
-                const ns = type==='views'? NAMESPACE_VIEWS : NAMESPACE_SHARES;
-                try {
-                    const res = await fetch(`${BASE_URL}/${ns}/${keyFromUrl(url)}`);
-                    const data = await res.json();
-                    const cnt = data?.count||0;
-                    if(type==='views') { localCounts[url]=cnt; localStorage.setItem('fallbackCounts', JSON.stringify(localCounts)); }
-                    else { localShares[url]=cnt; localStorage.setItem('fallbackShares', JSON.stringify(localShares)); }
-                    return cnt;
-                } catch(e) {
-                    return type==='views'? (localCounts[url]||0) : (localShares[url]||0);
-                }
-            }
-
-            async function incrementCloudCount(url, type='views') {
-                const ns = type==='views'? NAMESPACE_VIEWS : NAMESPACE_SHARES;
-                try {
-                    const res = await fetch(`${BASE_URL}/${ns}/${keyFromUrl(url)}/up`, {method:'POST'});
-                    const data = await res.json();
-                    const cnt = data?.count|| (type==='views'? (localCounts[url]||0)+1 : (localShares[url]||0)+1);
-                    if(type==='views') { localCounts[url]=cnt; localStorage.setItem('fallbackCounts', JSON.stringify(localCounts)); }
-                    else { localShares[url]=cnt; localStorage.setItem('fallbackShares', JSON.stringify(localShares)); }
-                    return cnt;
-                } catch(e) {
-                    const fallback = type==='views'? localCounts : localShares;
-                    const newCnt = (fallback[url]||0)+1;
-                    fallback[url]=newCnt;
-                    localStorage.setItem(type==='views'?'fallbackCounts':'fallbackShares', JSON.stringify(fallback));
-                    return newCnt;
-                }
-            }
-
-            async function checkStatus(url, dot) {
-                dot.className = 'status-dot checking';
-                try {
-                    const ctrl = new AbortController();
-                    setTimeout(()=>ctrl.abort(),4000);
-                    await fetch(url, {mode:'no-cors', signal:ctrl.signal});
-                    dot.className = 'status-dot live';
-                } catch { dot.className = 'status-dot dead'; }
-            }
-
-            function openLinkNormal(url, el) {
-                incrementCloudCount(url,'views').then(cnt => {
-                    if(el) el.querySelector('.click-count').textContent = cnt;
-                    else document.querySelector(`.click-count[data-url="${url}"]`).textContent = cnt;
-                });
-                if(el) el.classList.add('visited');
-                window.open(url, '_blank');
-            }
-
-            async function shareLink(url, el) {
-                const cnt = await incrementCloudCount(url,'shares');
-                if(el) el.querySelector('.share-count').textContent = cnt;
-                if(navigator.share) {
-                    try { await navigator.share({title: el?.dataset.name||'Link', url}); } catch(e) {}
-                } else {
-                    navigator.clipboard.writeText(url).then(()=>showToast('📋 Link copied (share not supported)'));
-                }
-            }
-
-            async function shortLink(url) {
-                showToast('⏳ Generating short link...',1000);
-                try {
-                    const res = await fetch(SHORTENER_API + encodeURIComponent(url));
-                    const short = (await res.text()).trim();
-                    await navigator.clipboard.writeText(short);
-                    showToast(`✅ Short link copied! ${short}`,3000);
-                } catch { showToast('❌ Failed',2000); }
-            }
-
-            function incognitoCopy(url) {
-                navigator.clipboard.writeText(url).then(()=>showToast('🕶️ Link copied! Paste in incognito tab.'));
             }
 
             // Render sections
@@ -373,10 +232,6 @@
                 <section id="${sec.id}">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold text-gray-200">${sec.title} <span class="text-sm text-gray-400 ml-2">(${sec.links.length} Links)</span></h2>
-                        <label class="text-xs text-gray-400 flex items-center gap-2 cursor-pointer select-none">
-                            <input type="checkbox" class="section-select-all rounded border-gray-700 text-indigo-600 focus:ring-indigo-500" data-section="${sec.id}">
-                            Select All
-                        </label>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="${sec.id}-grid"></div>
                 </section>
@@ -386,32 +241,21 @@
                 const grid = document.getElementById(`${sec.id}-grid`);
                 sec.links.forEach(link => {
                     const card = document.createElement('div');
-                    card.className = 'glass-card p-4 flex flex-col justify-between relative';
+                    card.className = 'glass-card p-4 flex flex-col justify-between';
                     card.dataset.url = link.url;
                     card.dataset.name = link.name;
-                    card.dataset.section = sec.id;
                     const serial = serialCounter++;
                     const loginBadge = sec.id==='cloud' ? '<span class="text-xs bg-yellow-800/60 text-yellow-200 px-2 py-0.5 rounded-full ml-2">Login required</span>' : '';
                     
                     card.innerHTML = `
                         <div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs text-indigo-400 font-bold">${serial}.</span>
-                                <span class="status-dot" data-url="${link.url}" title="Status"></span>
-                            </div>
+                            <span class="text-xs text-indigo-400 font-bold">${serial}.</span>
                             <h3 class="text-base font-semibold mt-1 flex items-center flex-wrap">${link.name} ${loginBadge}</h3>
-                            <p class="text-xs text-gray-500 truncate mt-1">${link.url}</p>
+                            <p class="url-text text-xs text-gray-400 mt-2">${link.url}</p>
                         </div>
-                        <div class="flex items-center justify-between mt-3">
-                            <div class="flex gap-1 text-xs text-gray-400">
-                                <span class="click-counter flex items-center gap-1"><span>👁️</span><span class="click-count" data-url="${link.url}">0</span></span>
-                                <span class="ml-2 flex items-center gap-1"><span>📤</span><span class="share-count">0</span></span>
-                            </div>
-                            <div class="flex gap-1">
-                                <button class="open-btn px-2 py-1 text-xs rounded bg-indigo-600 hover:bg-indigo-700 text-white">Open</button>
-                                <button class="copy-btn px-2 py-1 text-xs rounded bg-gray-700 hover:bg-gray-600 text-gray-300">Copy</button>
-                                <button class="share-btn px-2 py-1 text-xs rounded bg-gray-700 hover:bg-gray-600 text-gray-300">Share</button>
-                            </div>
+                        <div class="flex gap-1 mt-4">
+                            <button class="copy-btn flex-1 py-2 text-xs font-semibold rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition">Copy</button>
+                            <button class="share-btn flex-1 py-2 text-xs font-semibold rounded bg-gray-700 hover:bg-gray-600 text-gray-300 transition">Share</button>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -419,86 +263,35 @@
                 });
             });
 
-            // Load counts & status
-            async function loadAllCounts() {
-                for(const item of allFlatLinks) {
-                    const v = await getCloudCount(item.url, 'views');
-                    const s = await getCloudCount(item.url, 'shares');
-                    item.element.querySelector('.click-count').textContent = v;
-                    item.element.querySelector('.share-count').textContent = s;
-                    const dot = item.element.querySelector('.status-dot');
-                    checkStatus(item.url, dot);
+            // Handle copy and share buttons
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.copy-btn, .share-btn');
+                if (!btn) return;
+                e.stopPropagation();
+                const card = btn.closest('.glass-card');
+                const url = card.dataset.url;
+                if (btn.classList.contains('copy-btn')) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        btn.textContent = '✓';
+                        setTimeout(() => btn.textContent = 'Copy', 1000);
+                        showToast('📋 Link copied');
+                    });
+                } else if (btn.classList.contains('share-btn')) {
+                    if (navigator.share) {
+                        navigator.share({ title: card.dataset.name, url }).catch(() => {});
+                    } else {
+                        navigator.clipboard.writeText(url).then(() => showToast('📋 Link copied (share not supported)'));
+                    }
                 }
-            }
-            window.addEventListener('load', loadAllCounts);
+            });
 
-            // Search
+            // Search functionality
             document.getElementById('searchInput').addEventListener('input', function(e) {
                 const q = e.target.value.toLowerCase();
                 allFlatLinks.forEach(l => {
                     const match = !q || l.name.toLowerCase().includes(q) || l.url.toLowerCase().includes(q);
                     l.element.style.display = match ? '' : 'none';
                 });
-            });
-
-            // Event delegation for buttons & context
-            document.addEventListener('click', function(e) {
-                const btn = e.target.closest('.open-btn, .copy-btn, .share-btn');
-                if(btn) {
-                    e.stopPropagation();
-                    const card = btn.closest('.glass-card');
-                    const url = card.dataset.url;
-                    if(btn.classList.contains('open-btn')) openLinkNormal(url, card);
-                    else if(btn.classList.contains('copy-btn')) {
-                        navigator.clipboard.writeText(url).then(() => { btn.textContent='✓'; setTimeout(()=>btn.textContent='Copy',1000); });
-                    } else if(btn.classList.contains('share-btn')) shareLink(url, card);
-                    return;
-                }
-                const card = e.target.closest('.glass-card');
-                if(card && !e.target.closest('button, a, input, .status-dot')) {
-                    openLinkNormal(card.dataset.url, card);
-                }
-                if(e.target.classList.contains('status-dot')) {
-                    checkStatus(e.target.dataset.url, e.target);
-                }
-            });
-
-            // Context menu (right click / long press)
-            const ctxMenu = document.getElementById('contextMenu');
-            document.addEventListener('contextmenu', function(e) {
-                const card = e.target.closest('.glass-card');
-                if(!card) return;
-                e.preventDefault();
-                currentContextLink = card;
-                ctxMenu.style.left = e.clientX + 'px';
-                ctxMenu.style.top = e.clientY + 'px';
-                ctxMenu.classList.add('show');
-            });
-            document.addEventListener('click', ()=> ctxMenu.classList.remove('show'));
-            document.addEventListener('touchstart', function(e) {
-                const card = e.target.closest('.glass-card');
-                if(!card) return;
-                let timer = setTimeout(()=>{
-                    currentContextLink = card;
-                    const touch = e.touches[0];
-                    ctxMenu.style.left = touch.clientX + 'px';
-                    ctxMenu.style.top = touch.clientY + 'px';
-                    ctxMenu.classList.add('show');
-                }, 500);
-                card.addEventListener('touchend', ()=> clearTimeout(timer), {once:true});
-                card.addEventListener('touchmove', ()=> clearTimeout(timer), {once:true});
-            });
-
-            ctxMenu.addEventListener('click', function(e) {
-                const action = e.target.dataset.action;
-                if(!action || !currentContextLink) return;
-                const url = currentContextLink.dataset.url;
-                if(action==='open') openLinkNormal(url, currentContextLink);
-                else if(action==='incognito') incognitoCopy(url);
-                else if(action==='shortlink') shortLink(url);
-                else if(action==='copy') navigator.clipboard.writeText(url).then(()=>showToast('📋 Link copied'));
-                else if(action==='share') shareLink(url, currentContextLink);
-                ctxMenu.classList.remove('show');
             });
 
             // Theme toggle
@@ -508,7 +301,7 @@
                 document.body.className = '';
                 if(t==='amoled') document.body.classList.add('amoled-theme');
                 else if(t==='light') document.body.classList.add('light-theme');
-                themeBtns.forEach(b=>b.classList.remove('bg-indigo-600','text-white'));
+                themeBtns.forEach(btn => btn.classList.remove('bg-indigo-600','text-white'));
                 this.classList.add('bg-indigo-600','text-white');
                 localStorage.setItem('theme', t);
             }));
@@ -519,22 +312,7 @@
                 if(b.dataset.theme===savedTheme) { b.classList.add('bg-indigo-600','text-white'); }
             });
 
-            // Batch selection logic
-            const batchBar = document.getElementById('batchBar');
-            const selectedCount = document.getElementById('selectedCount');
-            function updateBatch() {
-                const checks = document.querySelectorAll('.section-select-all');
-                const checked = Array.from(document.querySelectorAll('.glass-card .link-checkbox:checked')); // Not used now, but we'll add checkboxes on cards? Hmm, the original UI has select all per section. We'll implement it via adding a checkbox on each card? The snippet had only section checkboxes. Let's modify to add a checkbox on each card for batch selection. 
-                // Actually the previous code had checkboxes on each link item. To keep UI clean, I'll add a small checkbox on top-left of each card, and section checkboxes control them.
-            } // I'll skip full batch implementation due to complexity here, but it's functional with section select all toggles.
-
-            // For demo, section select all toggles filter
-            document.querySelectorAll('.section-select-all').forEach(cb => cb.addEventListener('change', function(e){
-                const sec = this.dataset.section;
-                const cards = document.querySelectorAll(`#${sec}-grid .glass-card`);
-                cards.forEach(c => c.style.display = this.checked ? '' : 'none');
-            }));
-
+            document.getElementById('totalLinksBadge').textContent = `📎 ${allFlatLinks.length} Links`;
         })();
     </script>
 </body>
