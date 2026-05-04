@@ -23,7 +23,6 @@
             border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
         }
-        /* Visited glow */
         .glass-card.visited {
             box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.4), inset 0 0 0 1px rgba(139, 92, 246, 0.3);
             border-left: 3px solid #a78bfa;
@@ -76,7 +75,6 @@
             white-space: nowrap;
         }
         .toast.show { opacity: 1; }
-        /* Capsule button styles */
         .capsule-btn {
             display: inline-flex;
             align-items: center;
@@ -153,7 +151,6 @@
         (function(){
             'use strict';
 
-            // ------------------ DATA: All 76 links ----------------------
             const sections = [
                 { id: 'stream', title: '🎬 Stream', links: [
                     { name: "Rumble", url: "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html" },
@@ -241,7 +238,6 @@
                 ]}
             ];
 
-            // ---------------- Global State ----------------
             let serialCounter = 1;
             const allFlatLinks = [];
             const visitedUrls = JSON.parse(localStorage.getItem('visitedUrls')) || {};
@@ -256,11 +252,11 @@
                 try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
             }
 
+            // UPDATED Favicon fetcher using Google's service
             function getFaviconUrl(domain) {
-                return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : '';
+                return domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
             }
 
-            // Render sections
             const container = document.getElementById('sectionsContainer');
             container.innerHTML = sections.map(sec => `
                 <section id="${sec.id}">
@@ -309,20 +305,17 @@
                 });
             });
 
-            // Mark visited and open on blank area click
             document.addEventListener('click', function(e) {
                 const card = e.target.closest('.glass-card');
                 if (!card) return;
                 if (e.target.closest('.url-text') || e.target.closest('button')) return;
                 const url = card.dataset.url;
-                // Mark visited
                 visitedUrls[url] = true;
                 localStorage.setItem('visitedUrls', JSON.stringify(visitedUrls));
                 card.classList.add('visited');
                 window.open(url, '_blank');
             });
 
-            // Copy & Share buttons
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.copy-btn, .share-btn');
                 if (!btn) return;
@@ -346,7 +339,6 @@
                 }
             });
 
-            // Search
             document.getElementById('searchInput').addEventListener('input', function(e) {
                 const q = e.target.value.toLowerCase();
                 allFlatLinks.forEach(l => {
@@ -355,7 +347,6 @@
                 });
             });
 
-            // Theme toggle
             const themeBtns = document.querySelectorAll('#themeToggle button');
             themeBtns.forEach(b => b.addEventListener('click', function(){
                 const t = this.dataset.theme;
