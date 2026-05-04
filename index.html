@@ -17,6 +17,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             transition: all 0.3s ease;
+            cursor: pointer; /* indicate clickable area */
         }
         .glass-card:hover {
             border-color: rgba(99, 102, 241, 0.5);
@@ -42,10 +43,10 @@
         .light-theme .text-gray-200 { color: #111827 !important; }
         .light-theme .text-gray-300 { color: #374151 !important; }
         .light-theme .text-gray-500 { color: #6b7280 !important; }
-        .light-theme .bg-gray-900\/80 { background: rgba(255,255,255,0.8) !important; }
+        .light-theme .bg-gray-900\\/80 { background: rgba(255,255,255,0.8) !important; }
         .light-theme .bg-gray-800 { background: #e5e7eb !important; border-color: #d1d5db !important; }
         .light-theme .bg-gray-950 { background: #f9fafb !important; border-color: #e5e7eb !important; }
-        .light-theme .hover\:bg-white\/5:hover { background: rgba(0,0,0,0.05) !important; }
+        .light-theme .hover\\:bg-white\\/5:hover { background: rgba(0,0,0,0.05) !important; }
         .url-text {
             word-break: break-all;
             white-space: normal;
@@ -82,7 +83,7 @@
             </h1>
             <p class="text-sm text-gray-400 mt-1 flex items-center gap-2">
                 All videos & download links in one place
-                <span class="bg-indigo-600/20 text-indigo-300 text-xs px-2 py-0.5 rounded-full" id="totalLinksBadge">📎 73 Links</span>
+                <span class="bg-indigo-600/20 text-indigo-300 text-xs px-2 py-0.5 rounded-full" id="totalLinksBadge">📎 76 Links</span>
             </p>
         </div>
         <div class="flex items-center gap-3">
@@ -105,13 +106,13 @@
                 <span>🎬</span> Stream <span class="ml-auto text-xs opacity-80">13</span>
             </a>
             <a href="#streamdl" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 text-gray-400 transition">
-                <span>📡</span> Stream & Download <span class="ml-auto text-xs opacity-80">41</span>
+                <span>📡</span> Stream & Download <span class="ml-auto text-xs opacity-80">43</span>
             </a>
             <a href="#download" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 text-gray-400 transition">
                 <span>⬇️</span> Downloads <span class="ml-auto text-xs opacity-80">14</span>
             </a>
             <a href="#cloud" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 text-gray-400 transition">
-                <span>☁️</span> Cloud Login <span class="ml-auto text-xs opacity-80">5</span>
+                <span>☁️</span> Cloud Login <span class="ml-auto text-xs opacity-80">6</span>
             </a>
         </aside>
 
@@ -125,13 +126,7 @@
         (function(){
             'use strict';
 
-            // ================== Cloud Counters Config ==================
-            const NAMESPACE_VIEWS = 'nirankari-views-2025';
-            const NAMESPACE_SHARES = 'nirankari-shares-2025';
-            const BASE_URL = 'https://api.counterapi.dev/v1';
-            // ===========================================================
-
-            // ------------------ DATA: All 73 links ----------------------
+            // ------------------ DATA: All 76 links ----------------------
             const sections = [
                 { id: 'stream', title: '🎬 Stream', links: [
                     { name: "Rumble", url: "https://rumble.com/v74yo2q-78th-nirankari-sant-samagam-2025.html" },
@@ -189,7 +184,9 @@
                     { name: "Figshare", url: "https://figshare.com/articles/media/78th_Nirankari_Sant_Samagam_November_2025/31276960" },
                     { name: "Google Drive 2", url: "https://drive.google.com/drive/folders/1Q21OBBxNoQ7NfrezJX79YfCQOwmgGbfA?usp=drive_link" },
                     { name: "Pixeldrain", url: "https://pixeldrain.com/u/DdLhbsx8" },
-                    { name: "Gofile", url: "https://gofile.io/d/qhrtwW" }
+                    { name: "Gofile", url: "https://gofile.io/d/qhrtwW" },
+                    { name: "Amazon S3", url: "https://78thnirankarisamagam.s3.amazonaws.com/78th_Nirankari_Samagum_2025.mp4" },
+                    { name: "Cloudflare R2", url: "https://pub-e569a80dacb84083a23c9a0fca44d57b.r2.dev/78th_Nirankari_Samagum_2025.mp4" }
                 ]},
                 { id: 'download', title: '⬇️ Downloads', links: [
                     { name: "Cimediacloud", url: "https://app.cimediacloud.com/r/oFT3XPzKZJON" },
@@ -212,7 +209,8 @@
                     { name: "TeraBox 2", url: "https://1024terabox.com/s/1-nP_rfoakPFrL1jc5tVcQA" },
                     { name: "PikPak", url: "https://mypikpak.com/s/VOf8SVLzieb2uLOpgrwMCv74o2" },
                     { name: "4Shared", url: "https://www.4shared.com/folder/ldxhi-wS/78th_Nirankari_Sant_Samagam_20.html" },
-                    { name: "Dailymotion", url: "https://dai.ly/x9yofzm" }
+                    { name: "Dailymotion", url: "https://dai.ly/x9yofzm" },
+                    { name: "PikPak 2", url: "https://mypikpak.com/s/VOrJbgaBaZobTX96-y6xkIYxo2" }
                 ]}
             ];
 
@@ -263,7 +261,17 @@
                 });
             });
 
-            // Handle copy and share buttons
+            // Card click: open link if not clicking on URL text or buttons
+            document.addEventListener('click', function(e) {
+                const card = e.target.closest('.glass-card');
+                if (!card) return;
+                // Ignore clicks on URL text or buttons
+                if (e.target.closest('.url-text') || e.target.closest('button')) return;
+                const url = card.dataset.url;
+                window.open(url, '_blank');
+            });
+
+            // Copy & Share buttons
             document.addEventListener('click', function(e) {
                 const btn = e.target.closest('.copy-btn, .share-btn');
                 if (!btn) return;
@@ -285,7 +293,7 @@
                 }
             });
 
-            // Search functionality
+            // Search
             document.getElementById('searchInput').addEventListener('input', function(e) {
                 const q = e.target.value.toLowerCase();
                 allFlatLinks.forEach(l => {
